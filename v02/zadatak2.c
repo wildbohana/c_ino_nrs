@@ -41,14 +41,18 @@ int main(int argc, char* argv[])
 	}
 
 	// spakovati broj N i unete brojeve u niz bajtova
+	// pravim buffer koji je niz char-ova
 	char* buffer = (char*)malloc(n * sizeof(int) + sizeof(char));
 	buffer[0] = (char)n;
 
-	int* brojevi = (int*)(buffer + sizeof(char));
+	// pokazivač *brojevi pokazuje na drugi bajt u bufferu
+	// i odatle do kraja upisuje brojeve iz niza
+	int* brojevi = (int*)(buffer + 1 * sizeof(char));
 	for (int i = 0; i < n; i++) {
 		brojevi[i] = niz[i];
 	}
 
+	// niz nam više ne treba, sve je u bufferu
 	free(niz);
 
 	int* rezultat = CalculateMinMax(buffer);
