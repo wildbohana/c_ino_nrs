@@ -1,7 +1,16 @@
+/*
+Napisati program koji učitava broj X tipa int i konvertuje ga i binarni sistem u obliku stringa.
+
+Program treba da ima funkciju sa zaglavljem:
+char* konverzija(int x);
+
+Funkciju realizovati koristeći matematičke operacije / i % da bi se dobio traženi broj.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 
-char *konverzija(int n){
+char* konverzija(int n){
 	char s[33], *rez;
 	s[32] = 0;
 	int i = 31;
@@ -18,7 +27,7 @@ char *konverzija(int n){
      	n = n / 2;
    	} while (n != 0);
 
-   	rez = (char *)malloc(32 - i);
+   	rez = (char*) malloc(32 - i);
    	memcpy(rez, &s[i + 1], 32 - i);
 
    	return rez;
@@ -27,7 +36,7 @@ char *konverzija(int n){
 int main()
 {
     int n;
-    char *s;
+    char* s;
 
     printf("Unesite dekadni broj koji treba kovertovati: ");
     scanf("%d", &n);
