@@ -1,3 +1,10 @@
+/*
+Koristeći kreirani bafer, omogućiti čitanje 8 po 8 bita iz bafera u jedan karakter, 
+i prikazivanje tog karaktera na ekranu. Karakter treba da se sastoji iz 8 pročitanih bitova.
+
+Na primer, ako se pročita broj 01000001, taj broj predstavlja broj 65, što je ascii vrednost slova 'A'.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
