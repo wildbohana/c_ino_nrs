@@ -1,14 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int konverzija(char *s){
+int konverzija(char *s)
+{
 	int rez, i;
    	rez = 0;
    	i = 0;
 
-   	while (s[i] != 0) {
-    	rez = rez * 2 + s[i] - '0';
-    	i++;
+   	while (s[i] != 0) 
+	{
+    		rez = rez * 2 + s[i] - '0';
+    		i++;
    	}
    	return rez;
 }
