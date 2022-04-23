@@ -13,8 +13,8 @@ predstavljaju najmanju i najveću vrednost u nizu.
 #include <stdio.h>
 #include <stdlib.h>
 
-int* CalculateMinMax(char* buffer) {
-
+int* CalculateMinMax(char* buffer) 
+{
 	int* rez = (int*) malloc(2 * sizeof(int));
 	int N = (int) (*buffer);
 	int* niz = (int*) (buffer + sizeof(char));
@@ -23,7 +23,8 @@ int* CalculateMinMax(char* buffer) {
 	rez[1] = niz[0];		// max
 
 	// prolaz kroz niz, racunanje min i max
-	for (int i = 1; i < N; i++) {
+	for (int i = 1; i < N; i++) 
+	{
 		if (niz[i] < rez[0])
 			rez[0] = niz[i];
 		if (niz[i] > rez[1])
@@ -58,7 +59,8 @@ int main(int argc, char* argv[])
 
 	// pokazivač *brojevi pokazuje na drugi bajt u bufferu i odatle do kraja upisuje brojeve iz niza
 	int* brojevi = (int*) (buffer + 1 * sizeof(char));
-	for (int i = 0; i < n; i++) {
+	for (int i = 0; i < n; i++) 
+	{
 		brojevi[i] = niz[i];
 	}
 
