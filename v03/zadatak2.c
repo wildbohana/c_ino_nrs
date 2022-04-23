@@ -18,36 +18,40 @@ float Calculate(char* buffer);
 #include <ctype.h>
 
 // samo prepišeš
-void copyLEToLE(int x, void* copy) {
-	for(int i = 0; i < sizeof(x); i++) {
+void copyLEToLE(int x, void* copy) 
+{
+	for (int i = 0; i < sizeof(x); i++)
 		*((char*) copy + i) = *((char*) &x + i);
-	}
 }
 
 // obrćeš
-void copyLEToBE(int x, void* copy) {
-	for(int i = 0; i < sizeof(x); i++) {
+void copyLEToBE(int x, void* copy)
+{
+	for (int i = 0; i < sizeof(x); i++)
 		*((char*) copy + i) = *((char*) &x + sizeof(x) - 1 - i);
-	}
 }
 
 // funkcija za računanje
-float Calculate(char* buffer) {
+float Calculate(char* buffer) 
+{
     char c = buffer[0];
     char op = buffer[1];
     int op1, op2;
     float rez;
 
-    if (c == 'L') {
+    if (c == 'L') 
+    {
         copyLEToLE(*((int*) (buffer + 2)), &op1);
         copyLEToLE(*((int*) (buffer + 6)), &op2);
     } 
-	else {
+    else 
+    {
         copyLEToBE(*((int*) (buffer + 2)), &op1);
         copyLEToBE(*((int*) (buffer + 6)), &op2);
     }
 
-    switch (op) {
+    switch (op) 
+    {
         case '+': 
 			rez = op1 + op2; break;
         case '-': 
@@ -58,7 +62,8 @@ float Calculate(char* buffer) {
 			rez = op1 / op2; break;
     }
 
-    if (c == 'L') {
+    if (c == 'L') 
+    {
         return rez;
     } 
 	else {
@@ -93,7 +98,8 @@ int main()
     scanf("%d %d", &x, &y);
 
 	// određivanje da li je L ili B i poziv funkcije za računanje
-    if (toupper(c) == 'L') {
+    if (toupper(c) == 'L') 
+    {
         buffer[0] = 'L';
         buffer[1] = op;
 
@@ -104,7 +110,8 @@ int main()
 
         printf("Rezultat je %f", rez);
     } 
-	else {
+	else 
+	{
         buffer[0] = 'B';
         buffer[1] = op;
 
