@@ -1,3 +1,12 @@
+/*
+Napisati program koji učitava broj V u binarnom sistemu u obliku stringa i konvertuje taj broj u tip podataka int.
+
+Program treba da ima funkciju sa zaglavljem:
+int konverzije(char* s);
+
+Funkciju realizovati koristeći matematičke operacije + i * da bi se dobio traženi broj.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 
