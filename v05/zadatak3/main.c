@@ -12,7 +12,8 @@ tako što će se bitovi rezultata čitati direktno iz broja X.
 #include <stdlib.h>
 #include <string.h>
 
-char* konverzija(int n){
+char* konverzija(int n)
+{
 	char s[33], *rez;
 	int i, mask, num;
 
@@ -20,14 +21,16 @@ char* konverzija(int n){
 	mask = 1;
 	num = 0;
 
-	for (i = 0; i < 32; i++) {
-		if ((n & mask) == 0) {
+	for (i = 0; i < 32; i++) 
+	{
+		if ((n & mask) == 0)
 			s[31-i] = '0';
-		} 
-		else {
+		else
+		{
 			s[31-i] = '1';
 			num = i;
 		}
+		
 		mask = mask << 1;
 	}
 
@@ -36,7 +39,8 @@ char* konverzija(int n){
 	return rez;
 }
 
-int main() {
+int main() 
+{
 	int n;
 	char* s;
 
