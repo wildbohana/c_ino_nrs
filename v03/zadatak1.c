@@ -11,16 +11,16 @@ fun fact: za float nam ne treba nova funkcija, nego samo float tretiramo kao int
 #include <stdlib.h>
 #include <ctype.h>
 
-void copyLEToLE(int x, void* copy) {
-	for(int i = 0; i < sizeof(x); i++) {
-    	*((char*) copy + i) = *((char*) &x + i);
-	}
+void copyLEToLE(int x, void* copy) 
+{
+	for (int i = 0; i < sizeof(x); i++)
+    		*((char*) copy + i) = *((char*) &x + i);
 }
 
-void copyLEToBE(int x, void* copy) {
-	for(int i = 0; i < sizeof(x); i++) {
+void copyLEToBE(int x, void* copy) 
+{
+	for (int i = 0; i < sizeof(x); i++)
 		*((char*) copy + i) = *((char*) &x + sizeof(x) - 1 - i);
-	}
 }
 
 int main()
