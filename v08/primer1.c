@@ -28,7 +28,7 @@ int uporediVece(int a, int b)
 void bubbleSort(int a[], int n, poredjenje* uporedi) 
 {
     int i, j, t;
-        for (j = n - 1; j > 0; j--)
+    for (j = n - 1; j > 0; j--)
         for (i = 0; i < j; i++)
             if ((*uporedi)(a[i + 1], a[i])) 
             {
