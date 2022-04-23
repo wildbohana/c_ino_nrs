@@ -11,16 +11,16 @@ Matrica Bi,j predstavlja matricu koja se dobija od matrice A izbacivanjem i-te v
 #include <stdlib.h>
 #include <stdlib.h>
 
-int izracunajDeterminantu(int* buffer){
+int izracunajDeterminantu(int* buffer)
+{
     int n = buffer[0];
 
-    if (n == 1) {
+    if (n == 1)
         return buffer[1];
-	}
-    else if (n == 2) {
+    else if (n == 2)
         return buffer[1] * buffer[4] - buffer[2] * buffer[3];
-    } 
-	else {
+    else 
+    {
         int i, j, kol, suma = 0;
         int A[n][n];
 
@@ -43,6 +43,7 @@ int izracunajDeterminantu(int* buffer){
 
             suma += pow(-1, kol) * A[0][kol] * izracunajDeterminantu(buffer2);
         }
+	
         return suma;
     }
 }
