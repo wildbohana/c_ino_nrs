@@ -22,7 +22,7 @@ enum kodOperacije {sabiranje, oduzimanje, mnozenje, deljenje};
 // funkcija Calculate
 float* Calculate(const char* inBuff)
 {
-	int* operand = (int*)(inBuff + 1);
+	int* operand = (int*) (inBuff + 1);
 	float* rez = NULL;
 	rez = (float*) malloc(sizeof(float));
 
@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
 
 	printf("Unesite operaciju koju zelite da koristite [+, -, *, /]:");
 	scanf("%c", &operacija);
-    fflush(stdin);
+        fflush(stdin);
 	
 	// smestanje koda operacije u prvi bajt
 	if (operacija == '+')
