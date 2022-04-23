@@ -11,17 +11,18 @@ tako što će se bitovi upisivati u rezultat korišćenjem programiranja niskog 
 #include <stdio.h>
 #include <stdlib.h>
 
-int konverzija(char* s) {
+int konverzija(char* s) 
+{
 	int rez, mask, i;
 	rez = 0;
 
 	i = strlen(s) - 1;
 	mask = 1;
 
-	while (i >= 0) {
-		if (s[i] == '1') {
+	while (i >= 0) 
+	{
+		if (s[i] == '1')
 			rez = rez | mask;
-		}
 
 		mask = mask << 1;
 		i--;
@@ -30,7 +31,8 @@ int konverzija(char* s) {
 	return rez;
 }
 
-int main() {
+int main() 
+{
 	int x;
 	char s[33];
 
