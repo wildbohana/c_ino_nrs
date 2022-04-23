@@ -14,14 +14,16 @@ list izdvoji(char* buffer);
 int main()
 {
     node* l;
+    init(&l);
+    
     student st;
     int n, i;
-    init(&l);
 
     // ucitavanje studenata
     printf("Unesite broj studenata: ");
     scanf("%d", &n);
-    for (i = 0; i < n; i++) {
+    for (i = 0; i < n; i++) 
+    {
         printf("Unesite podatke o studentu broj %d: \n", i+1);
         scanf("%s%s%s%d", st.ime, st.prezime, st.brIndeksa, &st.brIspita);
         addEnd(l, st);
@@ -29,7 +31,8 @@ int main()
 
     // ispis studenata iz kruzne liste
     node* t = l->next;
-    while (t != l) {
+    while (t != l) 
+    {
         printf("%s\n", t->data.ime);
         printf("%s\n", t->data.prezime);
         printf("%s\n", t->data.brIndeksa);
