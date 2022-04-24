@@ -14,59 +14,82 @@ koji se dobije kao rezultat matematičke operacije.
 
 Napisati test program za ovu funkciju.
 */
-
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef int poredjenje(int, int);
+enum ko {sabiranje, oduzimanje, mnozenje, deljenje};
 
-int uporediManje(int a, int b)
+float* Calculate(char* buffer)
 {
-	return a < b;
-}
+    int* operand = (int*) (buffer + 1);
 
-int uporediVece(int a, int b)
-{
-	return a > b;
-}
+    float* rez = NULL;
+    rez = (float*) malloc(sizeof(float));
 
-void bubbleSort(int a[], int n, poredjenje* uporedi)
-{
-	int i, j, t;
-	for (j = n - 1; j > 0; j--)
-    	for (i = 0; i < j; i++)
-        	if ((*uporedi)(a[i + 1], a[i]))
-            {
-				t = a[i];
-				a[i] = a[i + 1];
-				a[i + 1] = t;
-			}
+    switch (buffer[0])
+    {
+        case sabiranje:
+            *rez = (float) (operand[0] + operand[1]);
+            break;
+        case oduzimanje:
+            *rez = (float) (operand[0] - operand[1]);
+            break;
+        case mnozenje:
+            *rez = (float) (operand[0] * operand[1]);
+            break;
+        case deljenje:
+            *rez = (float) (operand[0] / operand[1]);
+            break;
+    }
+
+    return rez;
 }
 
 int main()
 {
-	// unosimo broj n
-    int n;
-    printf("Unesi duzinu niza n: ");
-    scanf("%d", &n);
+    char operacija;
 
-	// unosimo niz
-	printf("Unesi elemente niza jedan po jedan:\n");
-    int i, a[n];
-    for (i = 0; i < n; i++)
-        scanf("%d", &a[i]);
+    printf("Izaberite operaciju [+, -, *, /]: ");
+    scanf("%c", &operacija);
+    fflush(stdin);
+    // moras fflush da bi se stdin ispraznio odmah sad
 
-	// sortirano rastuce
-    bubbleSort(a, n, uporediManje);
-    printf("\nNiz sortiran rastuce izgleda ovako: \n");
-    for (i = 0; i < n; i++)
-        printf("%d ", a[i]);
+    int op1;
+    int op2;
 
-	// sortirano opadajuce
-    bubbleSort(a, n, uporediVece);
-    printf("\nNiz sortiran opadajuce izgleda ovako: \n");
-    for (i = 0; i < n; i++)
-        printf("%d ", a[i]);
+    printf("Unesite prvi operand: ");
+    scanf("%d", &op1);
+    printf("Unesite drugi operand: ");
+    scanf("%d", &op2);
+
+    char* bafer = (char*) malloc(sizeof(char) + 2 * sizeof(int));
+
+    if (operacija == '+')
+        bafer[0] = sabiranje;
+    else if (operacija == '-')
+        bafer[0] = oduzimanje;
+    else if (operacija == '*')
+        bafer[0] = mnozenje;
+    else if (operacija == '/')
+        bafer[0] = deljenje;
+    else
+        return 0;
+
+    // ovo ne zaboravi - pokazivac na int i na char ne funkcionisu isto
+    int* operand = (int*) (bafer + sizeof(char));
+
+    operand[0] = op1;
+    operand[1] = op2;
+
+    float* rezultat;
+
+    rezultat = Calculate(bafer);
+    printf("Resenje je: %f\n", *rezultat);
+
+    // obavezno zbog malloc-a
+    free(rezultat);
+    free(bafer);
 
     return 0;
 }
+
