@@ -20,7 +20,6 @@ typedef struct {
 	int rezultat;
 } izraz;
 */
-
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -29,7 +28,7 @@ typedef struct {
 
 void izracunaj(char* buffer)
 {
-    int n = *((int*) buffer);
+    int n = (int*) buffer[0];
 	int rez;
 
 	short br1, br2;
@@ -37,7 +36,7 @@ void izracunaj(char* buffer)
 
 	int velicina = sizeof(izraz);
 
-	for(int i = 0; i < n; i++) {
+	for (int i = 0; i < n; i++) {
 		br1 = *((short*) (buffer + sizeof(int) + i * velicina));
 		op = *(buffer + sizeof(int) + i * velicina + 2);
 		br2 = *((short*) (buffer + sizeof(int) + i * velicina + 4));
@@ -50,6 +49,8 @@ void izracunaj(char* buffer)
 			rez = br1 * br2;
 		else if (op == '/')
 			rez = br1 / br2;
+        else
+            return 0;
 
 		*((short*) (buffer + sizeof(int) + i * velicina + 8)) = rez;
 	}
@@ -57,24 +58,26 @@ void izracunaj(char* buffer)
 
 void copyLEToBE(int x, void* copy)
 {
-	for(int i = 0; i < sizeof(x); i++)
+	for (int i = 0; i < sizeof(x); i++)
 		*((char*) copy + i) = *((char*) &x + sizeof(x) - 1 - i);
 }
 
 node* izdvoj(char* buffer)
 {
-	int n = *((int*) buffer);
-	int rez, rezBE;
+	int n = (int*) buffer[0];
+
+	int rez;
+	int rezBE;
 
 	node* l;
 	init(&l);
 
     int velicina = sizeof(izraz);
 
-
-	for(int i = 0; i < n; i++){
+	for (int i = 0; i < n; i++){
 		rez = *((short*) (buffer + sizeof(int) + i * velicina + 8));
 		copyLEToBE(rez, &rezBE);
+
 		addEnd(&l, rezBE);
 	}
 
@@ -86,21 +89,26 @@ int main()
     char* buffer = napraviNiz();
 
 	ispisNiz(buffer);
+	printf("\n");
+
 	izracunaj(buffer);
 	ispisNiz(buffer);
+	printf("\n");
 
 	node* l = izdvoj(buffer);
-	node* temp = l->next;
+	node* temp = l -> next;
 
-	int rezBE, rez;
+    int rez;
+	int rezBE;
+
 	printf("Rezultati izraza su: ");
 
 	while (temp != l)
     {
-		rezBE = temp->data;
+		rezBE = temp -> data;
 		copyLEToBE(rezBE, &rez);
 		printf("%d ", rez);
-		temp = temp->next;
+		temp = temp -> next;
 	}
 
     return 0;
