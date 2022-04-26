@@ -3,21 +3,30 @@
 
 void ispisiPodatke(char* buffer)
 {
-	int brSt = *((int*) buffer);
-	int brPr = *((int*) (buffer + sizeof(int)));
-	ispit* is = (ispit*) (buffer + 2 * sizeof(int));
+    // NE DIRAJ OVO!
+    int brojStudenata = *((int*) buffer);
+    int brojPredmeta  = *((int*) (buffer + sizeof(int)));
 
-	printf("Ispis podataka o ispitima:\n");
-	printf("Broj studenata: %d\n", brSt);
-	printf("Broj predmeta: %d\n", brPr);
+    ispit* is = (ispit*) (buffer + 2 * sizeof(int));
 
-	for(int j = 0; j < brPr; j++)
-		for(int i = 0; i < brSt; i++)
-			printf("%hd.%hd.%hd %c %d %s\n",
-				is[j * brSt + i].dan,
-				is[j * brSt + i].mesec,
-				is[j * brSt + i].godina,
-				is[j * brSt + i].ocena,
-				is[j * brSt + i].sifraIspRok,
-				is[j * brSt + i].profesor);
-};
+    printf("\n------------- Ispis podataka o ispitima -------------\n");
+    printf("Broj studenata: %d\n", brojStudenata);
+    printf("Broj predmeta: %d\n", brojPredmeta);
+    printf("-------------------- Ispis studenata ----------------\n");
+
+    for (int j = 0; j < brojPredmeta; j++)
+    {
+        for (int i = 0; i < brojStudenata; i++)
+        {
+            printf("%hd.%hd.%hd. %c %d (hex: %x) %s\n",
+                    is[j * brojStudenata + i].dan,
+                    is[j * brojStudenata + i].mesec,
+                    is[j * brojStudenata + i].godina,
+                    is[j * brojStudenata + i].ocena,
+                    is[j * brojStudenata + i].sifraIspitnogRoka,
+                    is[j * brojStudenata + i].sifraIspitnogRoka,
+                    is[j * brojStudenata + i].profesor);
+        }
+        printf("-----------------------------------------------------\n");
+    }
+}
