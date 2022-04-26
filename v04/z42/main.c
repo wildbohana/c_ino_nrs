@@ -1,14 +1,7 @@
-/*
-Napisati program koji učitava broj V u binarnom sistemu u obliku stringa i konvertuje taj broj u tip podataka int.
-
-Program treba da ima funkciju sa zaglavljem:
-int konverzije(char* s);
-
-Funkciju realizovati koristeći matematičke operacije + i * da bi se dobio traženi broj.
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
+
+#include <string.h>
 
 int konverzija(char* s)
 {
@@ -26,15 +19,15 @@ int konverzija(char* s)
 
 int main()
 {
-    int n;
-    char s[20];
+    char broj[20];
 
-    printf("Unesite binaran broj koji treba konvertovati: ");
-    scanf("%s", &s);
+    printf("Unesite binaran broj za konverziju: ");
+    scanf("%s", &broj);
+    fflush(stdin);
 
-    n = konverzija(s);
+    int x = konverzija(broj);
 
-    printf("Dobija se dekadni broj: %d", n);
+    printf("Broj u decimalnom formatu: %d", x);
 
     return 0;
 }
