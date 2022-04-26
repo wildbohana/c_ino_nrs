@@ -9,4 +9,3 @@ typedef struct {
 } student;
 
 #endif
-
