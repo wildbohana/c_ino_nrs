@@ -1,58 +1,88 @@
-/*
-Napisati program koji učitava broj X tipa int i konvertuje ga i binarni sistem u obliku stringa.
-
-Program treba da ima funkciju sa zaglavljem:
-char* konverzija(int x);
-
-Funkciju realizovati koristeći matematičke operacije / i % da bi se dobio traženi broj.
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 
-char* konverzija(int n)
+#include <string.h>
+
+char* konverzija(int x)
 {
     char s[33];
-    char* rez;
+    char *rez;
 
-    // ascii 0 = \0
+    // 0 je u ascii \0 (NULL) - kraj niza
     s[32] = 0;
     int i = 31;
 
     do {
-        if (n % 2 == 0)
+        if (x % 2 == 0)
             s[i] = '0';
         else
             s[i] = '1';
 
         i--;
-        n = n / 2;
-
-    } while (n != 0);
+        x = x / 2;
+    } while (x != 0);
 
     rez = (char*) malloc(32 - i);
     memcpy(rez, &s[i + 1], 32 - i);
 
-    /*
-    memcpy(destination pointer,
-           source pointer,
-           number of characters to copy)
-    */
+    // memcpy(pok. na odrediste, pok. na izvor, koliko karaktera kopira)
 
     return rez;
 }
 
 int main()
 {
-    int n;
-    char* s;
+    int x;
+    printf("Unesite broj x: ");
+    scanf("%d", &x);
 
-    printf("Unesite dekadni broj koji treba konvertovati: ");
-    scanf("%d", &n);
+    char* binarno = konverzija(x);
+    printf("Broj u binarnom formatu izgleda ovako:\n");
+    printf("%s", binarno);
 
-    s = konverzija(n);
+    return 0;
+}
+#include <stdio.h>
+#include <stdlib.h>
 
-    printf("Broj u binarnom formatu: %s", s);
+#include <string.h>
+
+char* konverzija(int x)
+{
+    char s[33];
+    char *rez;
+
+    // 0 je u ascii \0 (NULL) - kraj niza
+    s[32] = 0;
+    int i = 31;
+
+    do {
+        if (x % 2 == 0)
+            s[i] = '0';
+        else
+            s[i] = '1';
+
+        i--;
+        x = x / 2;
+    } while (x != 0);
+
+    rez = (char*) malloc(32 - i);
+    memcpy(rez, &s[i + 1], 32 - i);
+
+    // memcpy(pok. na odrediste, pok. na izvor, koliko karaktera kopira)
+
+    return rez;
+}
+
+int main()
+{
+    int x;
+    printf("Unesite broj x: ");
+    scanf("%d", &x);
+
+    char* binarno = konverzija(x);
+    printf("Broj u binarnom formatu izgleda ovako:\n");
+    printf("%s", binarno);
 
     return 0;
 }
