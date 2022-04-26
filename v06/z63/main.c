@@ -11,7 +11,7 @@ typedef struct {
     char JMBG[14];
 } Osoba;
 
-void ispisiStariju(char *buffer)
+void ispisiStariju(char* buffer)
 {
     int velicina = sizeof(Osoba);
 
@@ -29,9 +29,12 @@ void ispisiStariju(char *buffer)
     if (godina1 < godina2 ||
         godina1 == godina2 && mesec1 < mesec2 ||
         godina1 == godina2 && mesec1 == mesec2 && dan1 < dan2)
-        printf("Ime: %s\nPrezime: %s\nPol: %c\nJMBG: %s", &buffer[0], &buffer[12], buffer[24], &buffer[32]);
+        printf("Ime: %s\nPrezime: %s\nPol: %c\nJMBG: %s", 
+            &buffer[0], &buffer[12], buffer[24], &buffer[32]);
     else
-        printf("Ime: %s\nPrezime: %s\nPol: %c\nJMBG: %s", &buffer[0 + velicina], &buffer[12 + velicina], buffer[24 + velicina], &buffer[32 + velicina]);
+        printf("Ime: %s\nPrezime: %s\nPol: %c\nJMBG: %s", 
+            &buffer[0 + velicina], &buffer[12 + velicina], 
+            buffer[24 + velicina], &buffer[32 + velicina]);
 }
 
 int main()
