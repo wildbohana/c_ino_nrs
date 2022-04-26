@@ -4,22 +4,22 @@
 void init(node **l)
 {
 	*l = (node*) malloc(sizeof(node));
-	(*l)->next = *l;
+	(*l) -> next = *l;
 };
 
 void addBegin(node *l, int s)
 {
 	node *temp = (node*) malloc(sizeof(node));
-	temp->data = s;
-	temp->next = l->next;
-	l->next = temp;
+	temp -> data = s;
+	temp -> next = l -> next;
+	l -> next = temp;
 };
 
 void addEnd(node **l, int s)
 {
 	node *temp = (node*) malloc(sizeof(node));
-	(*l)->data = s;
-	temp->next = (*l)->next;
-	(*l)->next = temp;
+	(*l) -> data = s;
+	temp -> next = (*l) -> next;
+	(*l) -> next = temp;
 	*l = temp;
 };
