@@ -1,19 +1,11 @@
-/*
-Napisati program koji učitava broj X u binarnom sistemu u obliku stringa i konvertuje taj broj u tip podataka int.
-
-Program treba da ima funkciju sa zaglavljem:
-int konverzija(char* s);
-
-Funkciju realizovati koristeći programiranje niskog nivoa, 
-tako što će se bitovi upisivati u rezultat korišćenjem programiranja niskog nivoa.
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <string.h>
+
 int konverzija(char* s)
 {
-    int rez = 0;
+    int rez;
     int mask = 1;
 
     int i = strlen(s) - 1;
@@ -32,15 +24,15 @@ int konverzija(char* s)
 
 int main()
 {
-    char s[33];
-
-    printf("Unesite binarni broj koji treba konvertovati: ");
-    scanf("%s", s);
-
     int x;
+	char s[33];
 
-    x = konverzija(s);
-    printf("Dekadni broj izgleda ovako: %d\n", x);
+	printf("Unesite binarni broj: ");
+	scanf("%s", s);
+
+	x = konverzija(s);
+
+	printf("Broj u dekadnom formatu: %d\n", x);
 
     return 0;
 }
