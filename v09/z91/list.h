@@ -1,8 +1,6 @@
 #ifndef LIST_H_INCLUDED
 #define LIST_H_INCLUDED
 
-// kruzna lista sa granicnikom
-
 typedef struct node {
     int data;
     struct node *next;
