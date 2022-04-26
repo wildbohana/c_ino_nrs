@@ -1,14 +1,18 @@
 #ifndef ISPIT_H_INCLUDED
 #define ISPT_H_INCLUDED
+
 #pragma pack(4)
 
-typedef struct {
-    short dan, mesec, godina;
-    char ocena;
-    int sifraIspRok;
-    char profesor[30];
+typedef struct Ispit
+{
+    short dan;
+    short mesec;
+    short godina;
+    char  ocena;
+    int   sifraIspitnogRoka;
+    char  profesor[20];
 } ispit;
 
-void ispisiPodatke();
+void ispisiPodatke(char*);
 
 #endif
