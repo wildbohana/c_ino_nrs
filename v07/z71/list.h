@@ -3,8 +3,6 @@
 
 #include "student.h"
 
-// kruzna lista sa granicnikom
-
 typedef struct node {
     student data;
     struct node *next;
@@ -17,4 +15,3 @@ void addBegin(node *l, student s);
 void addEnd(node **l, student s);
 
 #endif
-
