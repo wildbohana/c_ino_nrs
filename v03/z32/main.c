@@ -13,14 +13,15 @@ float Calculate(char* buffer)
     int op1;
     int op2;
 
-    // prva konverzija
     if (c == 'L')
     {
+        // ako je operand poslat u LE formatu, ostavi ga u LE
         copyLEtoLE(*((int*) (buffer + 2)), &op1);
         copyLEtoLE(*((int*) (buffer + 6)), &op2);
     }
     else
     {
+        // ako je operand poslat u BE formatu, vrati ga u LE
         copyLEtoBE(*((int*) (buffer + 2)), &op1);
         copyLEtoBE(*((int*) (buffer + 6)), &op2);
     }
@@ -34,11 +35,13 @@ float Calculate(char* buffer)
         case '/': rez = (float) op1 / op2; break;
     }
 
-    // druga konverzija (ako je potrebno)
+    
     if (c == 'L')
+        // ako je izabran LE format, samo vrati resenje
         return rez;
     else
     {
+        // ako je izabran BE format, vrati resenje u BE formatu
         copyLEtoBE(*((int*) &rez), &rez);
         return rez;
     }
@@ -54,7 +57,6 @@ void copyLEtoBE(int x, void* copy)
 {
     for (int i = 0; i < sizeof(x); i++)
         *((char*) copy + i) = *((char*) &x + sizeof(x) - 1 - i);
-
 }
 
 int main()
@@ -90,6 +92,7 @@ int main()
 
         float rezultat = Calculate(bafer);
 
+        // rezultat je u LE, samo ga ispisi
         printf("Rezultat: %f", rezultat);
     }
     else
@@ -102,6 +105,7 @@ int main()
 
         float rezultat = Calculate(bafer);
 
+        // rezultat je u BE, vrati ga u LE da bi ga mogla ispisati
         copyLEtoBE(*((int*) & rezultat), &rezultat);
         printf("Rezultat: %f", rezultat);
     }
