@@ -7,7 +7,7 @@ void ispisiStudente(node* head)
 {
     node* trenutni = head -> next;
 
-    while(trenutni != head)
+    while (trenutni != head)
     {
         printf("\nIme: %s\n", trenutni -> data.ime);
         printf("Prezime: %s\n", trenutni -> data.prezime);
@@ -62,9 +62,7 @@ int main(void)
 
     char* buffer = (char*) malloc(n * sizeof(student) + sizeof(int));
 
-    // alternativno: *((int*) buffer) = n;
-    int* brStudenata = (int*) buffer;
-    *brStudenata = n;
+    *((int*) buffer) = n;
 
     student* upis = (student*) (buffer + sizeof(int));
 
