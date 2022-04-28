@@ -70,12 +70,12 @@ char* ucitavanjePodatakaIUpisUBuffer()
         {
             int hexSifra  = -1;
 
-            short* dan = ((short*) (buffer + 2 * sizeof(int) + (i * brojStudenata + j) * sizeof(ispit)));
-            short* mesec = ((short*) (buffer + 2 * sizeof(int) + (i * brojStudenata + j) * sizeof(ispit) + 2));
+            short* dan    = ((short*) (buffer + 2 * sizeof(int) + (i * brojStudenata + j) * sizeof(ispit)));
+            short* mesec  = ((short*) (buffer + 2 * sizeof(int) + (i * brojStudenata + j) * sizeof(ispit) + 2));
             short* godina = ((short*) (buffer + 2 * sizeof(int) + (i * brojStudenata + j) * sizeof(ispit) + 4));
-            char* ocena = ((char*) (buffer + 2 * sizeof(int) + (i * brojStudenata + j) * sizeof(ispit) + 6));
-            int* sifra = ((int*) (buffer + 2 * sizeof(int) + (i * brojStudenata + j) * sizeof(ispit) + 8));
-            char* prof = ((char*) (buffer + 2 * sizeof(int) + (i * brojStudenata + j) * sizeof(ispit) + 12));
+            char*  ocena  = ((char*) (buffer + 2 * sizeof(int) + (i * brojStudenata + j) * sizeof(ispit) + 6));
+            int*   sifra  = ((int*) (buffer + 2 * sizeof(int) + (i * brojStudenata + j) * sizeof(ispit) + 8));
+            char*  prof   = ((char*) (buffer + 2 * sizeof(int) + (i * brojStudenata + j) * sizeof(ispit) + 12));
 
             printf("\nStudent[%d]", i + 1);
 
