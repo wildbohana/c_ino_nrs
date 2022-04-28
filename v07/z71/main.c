@@ -31,6 +31,7 @@ int main()
         printf("%s\n", temp -> data.prezime);
         printf("%s\n", temp -> data.brIndeksa);
         printf("%d\n", temp -> data.brIspita);
+        
         temp = temp -> next;
     }
 
