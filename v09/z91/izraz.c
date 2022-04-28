@@ -10,7 +10,7 @@ void ispisNiz(char* buffer)
 
 	for (i = 0; i < n; i++)
         printf("%d %c %d = %d\n",
-        niz[i].broj1, niz[i].op, niz[i].broj2, niz[i].rezultat);
+        	niz[i].broj1, niz[i].op, niz[i].broj2, niz[i].rezultat);
 };
 
 char* napraviNiz()
@@ -19,7 +19,7 @@ char* napraviNiz()
 
 	izraz* niz = (izraz*) (rez + sizeof(int));
 
-	// po srpski???
+	// n = 4
 	*((int*) rez) = 4;
 
 	niz[0] = (izraz) {11, '+', 4, 0};
