@@ -27,7 +27,7 @@ int* izdvoj(int* buffer, provera* znakBroja)
     int niz[*buffer];
 
     for (int i = 0; i < *buffer; i++)
-        if((*znakBroja) (*(buffer + i + 1)))
+        if ((*znakBroja) (*(buffer + i + 1)))
         {
             niz[brojac] = *(buffer + i + 1);
             brojac++;
