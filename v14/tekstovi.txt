@@ -1,0 +1,16 @@
+Zadatak 1:
+
+Napisati program koji pri pritisku dugmeta BTN1 (pin 4) pali lampicu LD2 (pin 27), a pri puštanju dugmeta BTN1, gasi lampicu LD2.
+- Paljenje i gašenje lampice realizovati preko preko interapta povezanih na dugme BTN1.
+- Kako dugmadi nisu podrzana u interaptima, kreirati kompletan handler za dugme BTN1, koji podrazumeva i funkcije attachInterrupt1() i deattachInterrupt1() slične postojećim funkcijama.
+
+----------------------------------------------------------------------
+
+Zadatak 2:
+
+Dopuniti zadatak 1 sa sledećim funkcionalnostima:
+- Kreirati funkciju enableInterrupt1() koja omogućuje korišćenje interapta za dugme BTN1.
+- Kreirati funkciju disableInterrupt1() koja onemogućuje korišćenje interapta za dugme BTN1.
+- Kreirati funkciju getInterrupatEnable1() koja vraća da li je omogućen prekid na dugmetu BTN1.
+- Proširiti funkconalnost handler-a da podržava i dugme BTN2.
+- Omogućiti da pri paljenju/gašenju dugmeta BTN2 bude omogućeno/onemogućeno korišćenje interapta na dugmetu BTN1.

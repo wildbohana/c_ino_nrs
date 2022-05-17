@@ -1,0 +1,26 @@
+Zadatak 1:
+
+Napisati program koji pali i gasi led diode LD8 i LD2 na pinovima 33 i 27. 
+Pin 33 se i pali i gasi u jednom ciklusu loop-a, 
+a pin 27 se pali ili gasi u zavisnosti od stanja prekidača SW2 na pinu 7.
+
+----------------------------------------------------------------------
+
+Zadatak 2:
+
+Napisati program koji pali lampice na pinovima od 26 do 33 u krug. 
+Ukoliko je upaljen taster SW2 na pinu 7, rotirati lampice od manjih ka većim pinovima, a u suprotnom od većih ka manjim.
+
+----------------------------------------------------------------------
+
+Zadatak 3:
+
+Napisati program koji pali lampice na pinovima od 26 do 33, tako što prvo pali lampice 26 i 33, zatim 27 i 32, itd... sve dok se lampice ne sudare. 
+Nakon toga, lampice paliti u obrnutom redosledu, pa sve ponavljati.
+U zavisnosti od stanja prekidača SW na pinu 7, podesiti jednu od dve brzine rotacije.
+
+----------------------------------------------------------------------
+
+Zadatak 4:
+
+Napisati program koji broji koliko je upaljenih prekidača na pinovima 2, 7, 8 i 35, i u zavisnosti od toga pali duplo veći broj lampica, počevši od lampice sa brojem 26.

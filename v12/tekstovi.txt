@@ -1,0 +1,32 @@
+Zadatak 1:
+
+Napisati program koji pali i gasi led diode LD8 i LD2 na pinovima 33 i 27 na svakih 500, odnosno 25 milisekundi. 
+Kreirati dva task-a blink_task1 i blink_task2, za svaku lampicu po jedan. 
+Nakon toga, kreirati task blink_task3 koja omogućuje/onemogućuje task blink_task2 u zavisnosti od stanja prekidača SW2.
+
+----------------------------------------------------------------------
+
+Zadatak 2:
+
+Kreirati program koji koristeći task blink_task1 pali i gasi lampicu LD8 na pinu 33 u zavisnosti od dugmeta BTN4 na pinu 37.
+
+- Pratiti stanje dugmeta BTN4 i otkriti da li je stisnut duže od 2 sekunde. 
+  Po uočavanju ovakvog događaja, na silaznoj ivici programski resetovati ploču uc32.
+- Koristiti primitive millis i executeSoftReset.
+- Promenu stanja dugmeta pratiti na svakih 50 ms i ukoliko je stanje različito od prethodnog, prepoznati promenu stanja.
+
+----------------------------------------------------------------------
+
+Zadatak 3:
+
+Napisati program koji koristeći task blink_task1 pali i gasi led diodu LD8 na pinu 33 na svakih 100 milisekundi. 
+Kreirati i task blink_task2, koji na svakih 25 milisekundi proverava stanje prekidača na pinovima 2, 7, 8, i 35, broji koliko ima upaljenih prekidača i u zavisnosti od toga, postavlja period blinkanja lampice LD8 na 100, 200, 300, 400 ili 500ms. 
+Period blinkanja menjati periodom na koji se startuje blink_task1
+
+----------------------------------------------------------------------
+
+Zadatak 4:
+
+Napisati program koji koristeći task blink_task1 proverava stanje na prekidaču i ukoliko je prekidač upaljen, upaliti lampicu, a ukoliko je prekidač ugašen, ugasiti lampicu. 
+Redni broj prekidača i lampice primiti kao parametar. 
+Koristeći dati task, kontrolisati lampice na pinovima 26, 27, 28 i 29 u zavisnosti od stanja na prikidačima na pinovima 2, 7, 8 i 35.

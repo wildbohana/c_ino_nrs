@@ -1,0 +1,22 @@
+Zadatak 1:
+
+Napisati program koji koristeći task blink_task1() pali i gasi led diodu LD1 na pinu 26 na svakih 100 milisekundi. 
+Nakon toga:
+- Napisati task prekidac1() koji se pali na svakih 50 ms i proverava stanje prekidača SW1 na pinu 2. Ukoliko je prekidač upravo upaljen, omogućiti korišćenje taska blink_task1, a ukoliko je upravo ugašen, onemogućiti ga.
+- Napisati task prekidac2() koji se pali na svakih 50 ms i proverava stanje prekidača SW2 na pinu 7. Ukoliko je prekidač upravo upaljen, promeniti vreme blinkanja taska blink_task1 na 1000 ms, a ukoliko je upravo ugašen na 100ms.
+
+----------------------------------------------------------------------
+
+Zadatak 2:
+
+Napisati program koji koristeći task dugme() broji broj pritisaka na dugme koji su duži od 2s i nakon svakog takvog pritiska ispisuje broj pritisaka na serijski monitor.
+
+----------------------------------------------------------------------
+
+Zadatak 3:
+
+Napisati task prekidac() koji proverava stanje prekidača na određenom pinu.
+- Ukoliko je prekidač upravo upaljen, startovati odredjenu funkciju bez parametara, a ukoliko je upravo ugašen startovati drugu funkciju.
+- Task preko parametra prima pokazivač na strukturu koja u sebi sadrži pin prekidača, njegovo staro stanje, kao i dva pokazivača na funkcije koje treba da se startuju prilikom paljenja/gašenja prekidača.
+- Koristeći dati task, omogućiti uvećanje globalnog brojača br na uzlaznoj ivici signala prekidača SW1 na pinu 2. Task startovati na svakih 50ms.
+- Koristeći dati task, omogućiti ispis globalnog brojača br na serijski monitor na silaznoj liniji prekidača SW2 na pinu 7 . Task startovati na svakih 50ms.
