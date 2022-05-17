@@ -22,6 +22,7 @@ void blink_task1(int id, void * tptr)
 	else 
 	{
 		digitalWrite(PIN_LED1, LOW);
+		
 		if (period > 2000)
 		{
 			executeSoftReset(RUN_SKETCH_ON_BOOT);
@@ -36,9 +37,9 @@ void blink_task1(int id, void * tptr)
 
 void setup()
 {
-   pinMode(PIN_LED1, OUTPUT);
+	pinMode(PIN_LED1, OUTPUT);
 
-   blink1_id = createTask(blink_task1, 50, TASK_ENABLE, &blink1_var);
+	blink1_id = createTask(blink_task1, 50, TASK_ENABLE, &blink1_var);
 }
 
 void loop()
