@@ -1,6 +1,7 @@
 Zadatak 1:
 
-Napisati program koji sa potenciometra čita vrednost ulaza i tu vrednost ispisuje na digitalni izlaz LD8 (pin 33). Stanje potenciometra osvežavati na svakih 500 milisekundi.
+Napisati program koji sa potenciometra čita vrednost ulaza i tu vrednost ispisuje na digitalni 
+izlaz LD8 (pin 33). Stanje potenciometra osvežavati na svakih 500 milisekundi.
 
 ----------------------------------------------------------------------
 
@@ -15,10 +16,13 @@ Umesto funkcije analogWrite() u zadatku 1, razviti svoju PWM funkciju, shodno sl
 
 Zadatak 3:
 
-Napisati program koji sa potenciometra čita vrednost ulaza i tu vrednost ispisuje na 8 lampica. Broj upaljenih lampica krenuvši od lampice na pinu 26 treba da bude srazmeran jačini ulaza sa potenicometra.
+Napisati program koji sa potenciometra čita vrednost ulaza i tu vrednost ispisuje na 8 lampica. 
+Broj upaljenih lampica krenuvši od lampice na pinu 26 treba da bude srazmeran jačini ulaza sa potenicometra.
 
 ----------------------------------------------------------------------
 
 Zadatak 4:
 
-Napisati program koji sa potenctiometra čita vrednost ulaza na svakih 100ms i proverava da li je došlo do naglog skoka ulaznog signala i o tome obaveštava korisnika putem serijskog porta. Do naglog skoka dolazi ukoliko se u poslednjih 5 merenja vrednost signala promenila za više od 200.
+Napisati program koji sa potenctiometra čita vrednost ulaza na svakih 100ms i proverava da li je došlo 
+do naglog skoka ulaznog signala i o tome obaveštava korisnika putem serijskog porta. Do naglog skoka 
+dolazi ukoliko se u poslednjih 5 merenja vrednost signala promenila za više od 200.
