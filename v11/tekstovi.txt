@@ -15,7 +15,8 @@ Ukoliko je upaljen taster SW2 na pinu 7, rotirati lampice od manjih ka većim pi
 
 Zadatak 3:
 
-Napisati program koji pali lampice na pinovima od 26 do 33, tako što prvo pali lampice 26 i 33, zatim 27 i 32, itd... sve dok se lampice ne sudare. 
+Napisati program koji pali lampice na pinovima od 26 do 33, tako što prvo pali lampice 26 i 33, 
+zatim 27 i 32, itd... sve dok se lampice ne sudare. 
 Nakon toga, lampice paliti u obrnutom redosledu, pa sve ponavljati.
 U zavisnosti od stanja prekidača SW na pinu 7, podesiti jednu od dve brzine rotacije.
 
@@ -23,4 +24,5 @@ U zavisnosti od stanja prekidača SW na pinu 7, podesiti jednu od dve brzine rot
 
 Zadatak 4:
 
-Napisati program koji broji koliko je upaljenih prekidača na pinovima 2, 7, 8 i 35, i u zavisnosti od toga pali duplo veći broj lampica, počevši od lampice sa brojem 26.
+Napisati program koji broji koliko je upaljenih prekidača na pinovima 2, 7, 8 i 35, 
+i u zavisnosti od toga pali duplo veći broj lampica, počevši od lampice sa brojem 26.
