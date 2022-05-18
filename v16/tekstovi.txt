@@ -1,0 +1,29 @@
+Zadatak 1:
+
+Napisati program koji uzima jedan po jedan znak sa serijskog ulaza i ispisuje ga na serijski izlaz.
+
+----------------------------------------------------------------------
+
+Zadatak 2:
+
+Napisati program koji učitava cifru po cifru sa serijskog ulaza i ispisuje te cifre u binarnom sistemu na lampicama na pinovima 29, 28, 27 i 26.
+- Ukoliko je na primer ucitana cifra 5, ispisati 0101, tj. upalite lampice 28 i 26, a ostale ugasiti.
+
+----------------------------------------------------------------------
+
+Zadatak 3:
+
+Napisati program koji uzima jedan po jedan red sa serijskog ulaza i ispisuje ga na serijski izlaz.
+
+----------------------------------------------------------------------
+
+Zadatak 4:
+
+Napisati program koji na svakih 1s učitava binarni broj koji formairaju prekidaci na pinovima 25, 8, 7 i 2m prebacuje ga u dekadni i ispisuje taj broj na serijskom monitoru u dekadnom sistemu.
+- Na primer, ako su upaljeni samo prekidači na pinovima 8 i 2, tada oni čine broj 0101 u osnovi 2, što je broj 5.
+
+----------------------------------------------------------------------
+
+Zadatak 5:
+
+Napisati program koji učitava dva broja sa serijskog ulaza, sabira ih i ispisuje njihov zbir.
