@@ -2,10 +2,14 @@ Zadatak 1:
 
 Napisati program koji:
 - Postavlja lampicu na pinu 26 kao izlazni pin i inicijalizuje komunikaciju sa serijskim monitorom na 9600bps.
-- Sadrži globalnu promenljivu br koja može da ima vrednosti od 1 do 10. Inicijalna vrednost promenljive je 1. Postavlja task koji pali i gasi lampicu na pinu 26. Broj blinkanja u jednoj sekundi treba da bude jednak broju br.
-- Prilikom pritiska na dugme na pinu 4 ispisuje period blinkanja lampice na serijski monitor. Prilikom puštanja dugmeta na pinu 4 menja frekvenciju blinkanja na vrednost br.
-- Sadrži interapte vezane za prekidač 1 (pin 2) koji pri promeni stanja prekidača povećavaju vrednost promenljive br. Ukoliko br pređe vrednost 10, postaviti vrednost na 1. Promenu prepoznati koristeći 2 uvezana interapta sa različitim modovima paljenja.
-- Napraviti task koji prati stanje na serijskom monitoru i ukoliko je učitan znak od 0 do 9, u promenljivu br postavlja vrednost znaka uvećanu za 1 i menja period blinkanja lampice srazmeran broju br.
+- Sadrži globalnu promenljivu br koja može da ima vrednosti od 1 do 10. Inicijalna vrednost promenljive je 1. 
+  Postavlja task koji pali i gasi lampicu na pinu 26. Broj blinkanja u jednoj sekundi treba da bude jednak broju br.
+- Prilikom pritiska na dugme na pinu 4 ispisuje period blinkanja lampice na serijski monitor. 
+  Prilikom puštanja dugmeta na pinu 4 menja frekvenciju blinkanja na vrednost br.
+- Sadrži interapte vezane za prekidač 1 (pin 2) koji pri promeni stanja prekidača povećavaju vrednost promenljive br. 
+  Ukoliko br pređe vrednost 10, postaviti vrednost na 1. Promenu prepoznati koristeći 2 uvezana interapta sa različitim modovima paljenja.
+- Napraviti task koji prati stanje na serijskom monitoru i ukoliko je učitan znak od 0 do 9, u promenljivu br 
+  postavlja vrednost znaka uvećanu za 1 i menja period blinkanja lampice srazmeran broju br.
 
 ----------------------------------------------------------------------
 
@@ -14,6 +18,9 @@ Zadatak 2:
 Napisati program koji:
 - Postavlja lampice na pinovima 26-33 kao izlazne pinove i inicijalizuje komunikaciju sa serijskim monitorom na 9600bps.
 - Sadrži promenljivu br, inicijalno postavljenu na 0 u kojoj će biti sumirane vrednosti sa analognog ulaza A0.
-- Sadrži task koji prilikom pritiska na dugme na pinu 4, ukoliko je dugme držano duže od 2 sekunde, povećava vrednost brojača br za vrednost pročitanu sa analognog ulaza A0 i ispisuje brojač na serijski monitor.
-- Sadrži interapt koji se startuje pri paljenju prekidača na pinu 2, čita vrednost analognog ulaza, skalira je na vrednost od 0 do 255 i dobijeni broj prikazuje na lampicama 26-33 u binarnom obliku.
-- Sadrži task koji učitava broj sa serijskog monitora, ukoliko postoji, i ukoliko je taj broj manji od brojača br, onemogućuje task za kontrolu dugmeta iz stavke 3. Ispisati odgovarajuću poruku na serijski izlaz.
+- Sadrži task koji prilikom pritiska na dugme na pinu 4, ukoliko je dugme držano duže od 2 sekunde, 
+  povećava vrednost brojača br za vrednost pročitanu sa analognog ulaza A0 i ispisuje brojač na serijski monitor.
+- Sadrži interapt koji se startuje pri paljenju prekidača na pinu 2, čita vrednost analognog ulaza, 
+  skalira je na vrednost od 0 do 255 i dobijeni broj prikazuje na lampicama 26-33 u binarnom obliku.
+- Sadrži task koji učitava broj sa serijskog monitora, ukoliko postoji, i ukoliko je taj broj manji od brojača br, 
+  onemogućuje task za kontrolu dugmeta iz stavke 3. Ispisati odgovarajuću poruku na serijski izlaz.
