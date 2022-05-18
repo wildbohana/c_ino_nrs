@@ -20,13 +20,15 @@ Kreirati program koji koristeći task blink_task1 pali i gasi lampicu LD8 na pin
 Zadatak 3:
 
 Napisati program koji koristeći task blink_task1 pali i gasi led diodu LD8 na pinu 33 na svakih 100 milisekundi. 
-Kreirati i task blink_task2, koji na svakih 25 milisekundi proverava stanje prekidača na pinovima 2, 7, 8, i 35, broji koliko ima upaljenih prekidača i u zavisnosti od toga, postavlja period blinkanja lampice LD8 na 100, 200, 300, 400 ili 500ms. 
+Kreirati i task blink_task2, koji na svakih 25 milisekundi proverava stanje prekidača na pinovima 2, 7, 8, i 35, 
+broji koliko ima upaljenih prekidača i u zavisnosti od toga, postavlja period blinkanja lampice LD8 na 100, 200, 300, 400 ili 500ms. 
 Period blinkanja menjati periodom na koji se startuje blink_task1
 
 ----------------------------------------------------------------------
 
 Zadatak 4:
 
-Napisati program koji koristeći task blink_task1 proverava stanje na prekidaču i ukoliko je prekidač upaljen, upaliti lampicu, a ukoliko je prekidač ugašen, ugasiti lampicu. 
+Napisati program koji koristeći task blink_task1 proverava stanje na prekidaču i ukoliko je prekidač upaljen, 
+upaliti lampicu, a ukoliko je prekidač ugašen, ugasiti lampicu. 
 Redni broj prekidača i lampice primiti kao parametar. 
 Koristeći dati task, kontrolisati lampice na pinovima 26, 27, 28 i 29 u zavisnosti od stanja na prikidačima na pinovima 2, 7, 8 i 35.
