@@ -1,7 +1,8 @@
 void kopiranje(int id, void * tptr) 
 {
 	static int na_redu_je = 0;
-	static int prvi, drugi;
+	static int prvi;
+	static int drugi;
 
 	if (na_redu_je == 0)
 	{
