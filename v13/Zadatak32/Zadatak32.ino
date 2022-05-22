@@ -6,9 +6,9 @@ void dugme1(int id, void * tptr)
 {
     int novoStanje = digitalRead(PIN_BTN1);
 
-	if (staroStanje == 1  && novoStanje == 0) 
+	if (staroStanje == 1 && novoStanje == 0) 
 	{
-        if (millis()-staroVreme >= 2000) 
+        if (millis() - staroVreme >= 2000) 
 		{
             brojac++;
             Serial.println(brojac);
