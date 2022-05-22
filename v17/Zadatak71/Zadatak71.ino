@@ -6,6 +6,7 @@ int PIN_SW1 = 2;
 int INT_SW1 = 1;
 int br, lampica_id;
 
+// mora se definisati iznad rekurzivnog pozivanja
 void interruptOff();
 
 void interruptOn()
@@ -44,6 +45,7 @@ void dugme(int id, void * tptr)
 	{
 		setTaskPeriod(lampica_id, 1000 / (2 * br));
 	}
+	
 	oldState = newState;
 }
 
@@ -52,6 +54,7 @@ void serijskiMonitor(int id, void * tptr)
     if (Serial.available())
 	{
         char c = Serial.read();
+		
         if ('0' <= c && c <= '9') 
 		{
 			br = c- '0' + 1;
@@ -64,6 +67,7 @@ void setup()
 {
 	Serial.begin(9600);
 	pinMode(PIN_LD1, OUTPUT);
+	
 	br = 1;
 
 	if (digitalRead(PIN_SW1))
