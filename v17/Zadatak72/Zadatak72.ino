@@ -45,7 +45,7 @@ void obrisiInterrupt(int id, void * tptr)
 	if (Serial.available())
 	{
 		// na plocici pisati
-		//const char* s = Serial.readString().c_str();
+		// const char* s = Serial.readString().c_str();
 		char *s = Serial.readString();
 		int x = atoi(s);
 
@@ -64,7 +64,8 @@ void obrisiInterrupt(int id, void * tptr)
 void setup()
 {
 	Serial.begin(9600);
-	for(int i = 0; i < 8; i++) pinMode(PIN_LD1 + i, OUTPUT);
+	for (int i = 0; i < 8; i++) 
+		pinMode(PIN_LD1 + i, OUTPUT);
 
 	br = 0;
 	oldTime = millis();
