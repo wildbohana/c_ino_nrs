@@ -6,6 +6,7 @@ void potenciometar(int id, void * tptr)
 {
 	int sensorValue = analogRead(analogInPin);
 	int outputValue = map(sensorValue, 0, 1023, 0, 255);
+	
 	analogWrite(analogOutPin, outputValue);
 
 	Serial.print("sensor = ");
