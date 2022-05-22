@@ -1,7 +1,6 @@
 typedef void funkcija();
 
-typedef struct Podaci
-{
+typedef struct Podaci {
 	int pin_prekidac;
 	int staroStanje;
 	funkcija* f1;
@@ -34,8 +33,8 @@ void prekidac(int id, void * tptr)
 	}
 	else if ((s->staroStanje == 0) && (novoStanje == 1))
 	{
-		if (s -> f1) s -> f1();
-		if (s -> f2) s -> f2();
+		if (s->f1) s->f1();
+		if (s->f2) s->f2();
 	}
 }
 
