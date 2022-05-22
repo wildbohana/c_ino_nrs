@@ -6,7 +6,6 @@ int x = 0;
 void potenciometar(int id, void * tptr)
 {
     int novaJacina = analogRead(analogInPin);
-
 	merenja[x] = novaJacina;
 
 	int minimum = merenja[0];
