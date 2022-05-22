@@ -14,15 +14,15 @@ void ispis(int id, void * tptr)
 
 			Serial.println(s);
 
-			int i, len = strlen(s);
+			int len = strlen(s);
 
-			for (i = 0; i < len; i++)
+			for (int i = 0; i < len; i++)
 				if (s[i] == '1')
 					digitalWrite(25 + len - i, HIGH);
 				else
 					digitalWrite(25 + len - i, LOW);
 
-			for (i = len; i < 4; i++)
+			for (int i = len; i < 4; i++)
 				digitalWrite(26 + i, LOW);
 		}
 	}
@@ -32,11 +32,12 @@ void setup()
 {
 	Serial.begin(9600);
 
-	for(int i = 26; i < 30; i++) 
+	for (int i = 26; i < 30; i++) 
 	{
 		pinMode(i, OUTPUT);
 		digitalWrite(i, LOW);
 	}
+	
 	createTask(ispis, 50, TASK_ENABLE, NULL);
 }
 
