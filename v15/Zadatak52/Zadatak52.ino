@@ -25,6 +25,7 @@ void setup()
 	pinMode(analogOutPin, OUTPUT);
 
 	startTime = millis();
+	
 	createTask(potenciometar, PWM_BIT_TIME, TASK_ENABLE, NULL);
 }
 
