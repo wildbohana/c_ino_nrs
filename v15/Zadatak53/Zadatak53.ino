@@ -9,7 +9,6 @@ void potenciometar(int id, void * tptr)
         digitalWrite(i, LOW);
 
     int jacina = analogRead(analogInPin);
-
     int brojLampica = map(jacina, 0, 1023, 0, 8);
 
     for (int i = 0; i < brojLampica ; i++)
