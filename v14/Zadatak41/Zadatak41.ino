@@ -1,21 +1,23 @@
-// definisemo pokazivac na funkciju tipa void bez parametara
+// pokazivac na funkciju tipa void bez parametara
 typedef void (*interruptFunc) ();
 
-// definisemo promenljive za rad sa interaptom za dugme BTN1
+// promenljive za rad sa prekidom za dugme BTN1
 int BTN1 = 4;
 int BTN1_old_state;
 int BTN1_new_state;
 interruptFunc BTN1_f_rising;
 interruptFunc BTN1_f_falling;
 
-// pravljenje interrupt-a za dugme1
+// pravljenje prekida za dugme1
 void attachInterupt1(interruptFunc f, int mode)
 {
-	if (mode == RISING) BTN1_f_rising = f;
-	else BTN1_f_falling = f;
+	if (mode == RISING) 
+		BTN1_f_rising = f;
+	else 
+		BTN1_f_falling = f;
 }
 
-// uklanjanje interrupt-a za dugme1
+// uklanjanje prekida za dugme1
 void deattachInterupt1(int mode)
 {
 	if (mode == RISING)
