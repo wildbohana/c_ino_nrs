@@ -1,9 +1,3 @@
-/*
-Blink
-Turns on an LED on for one second, then off for one second, repeatedly.
-ZADATAK: promeni pin ili vreme; iskoristi tastere BTN1:4
-*/
- 
 #define dump(v) Serial.println(v) 
 
 void setup() 
@@ -24,7 +18,7 @@ void loop()
 	int pin7 = digitalRead(7);
 	dump(pin7);
 
-	if (pin7
+	if (pin7)
 		digitalWrite(27, HIGH);
 	else
 		digitalWrite(27, LOW);  
