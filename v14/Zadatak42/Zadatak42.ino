@@ -1,7 +1,7 @@
-// definisemo pokazivac na funkciju tipa void bez parametara
+// pokazivac na funkciju tipa void bez parametara
 typedef void (*interruptFunc) ();
 
-// definisemo promenljive za rad sa interaptom za dugme BTN1
+// promenljive za rad sa prekidom za dugme BTN1
 int BTN1 = 4;
 int BTN1_old_state;
 int BTN1_new_state;
@@ -9,7 +9,7 @@ interruptFunc BTN1_f_rising;
 interruptFunc BTN1_f_falling;
 int BTN1_enabled;
 
-// definisemo promenljive za rad sa interaptom za dugme BTN2
+// definisemo promenljive za rad sa prekidom za dugme BTN2
 int BTN2 = 34;
 int BTN2_old_state;
 int BTN2_new_state;
@@ -17,7 +17,7 @@ interruptFunc BTN2_f_rising;
 interruptFunc BTN2_f_falling;
 int BTN2_enabled;
 
-// postavljanje interapta za dugme1
+// postavljanje prekida za dugme1
 void attachInterupt1(interruptFunc f, int mode)
 {
 	if (mode == RISING)
@@ -26,7 +26,7 @@ void attachInterupt1(interruptFunc f, int mode)
 		BTN1_f_falling = f;
 }
 
-// uklanjanje interapta za dugme1
+// uklanjanje prekida za dugme1
 void deattachInterupt1(int mode)
 {
 	if (mode == RISING)
@@ -57,7 +57,7 @@ void disableInterrupt1()
 	BTN1_enabled = false;
 }
 
-// postavljanje interapta za dugme2
+// postavljanje prekida za dugme2
 void attachInterupt2(interruptFunc f, int mode)
 {
 	if (mode == RISING)
@@ -66,7 +66,7 @@ void attachInterupt2(interruptFunc f, int mode)
 		BTN2_f_falling = f;
 }
 
-// uklanjanje interapta za dugme2
+// uklanjanje prekida za dugme2
 void deattachInterupt2(int mode)
 {
 	if (mode == RISING)
