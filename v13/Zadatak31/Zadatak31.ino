@@ -13,7 +13,7 @@ void prekidac1(int id, void * tptr)
 {
     int novoStanje = digitalRead(PIN_SW1);
 
-	if (staroStanje1 == 1  && novoStanje == 0)
+	if (staroStanje1 == 1 && novoStanje == 0)
         setTaskState(blink1_id, TASK_DISABLE);
 	else if (staroStanje1 == 0 && novoStanje == 1)
         setTaskState(blink1_id, TASK_ENABLE);
@@ -25,9 +25,9 @@ void prekidac2(int id, void * tptr)
 {
     int novoStanje = digitalRead(PIN_SW2);
 
-	if (staroStanje2 == 1  && novoStanje == 0)
+	if (staroStanje2 == 1 && novoStanje == 0)
         setTaskPeriod(blink1_id, 100);
-	else if (staroStanje2 == 0 && novoStanje ==1 )
+	else if (staroStanje2 == 0 && novoStanje == 1)
         setTaskPeriod(blink1_id, 1000);
 	
 	staroStanje2 = novoStanje;
