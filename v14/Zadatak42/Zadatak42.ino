@@ -1,173 +1,167 @@
-// pokazivac na funkciju tipa void bez parametara
+/*
+Dopuniti zadatak 1 sa sledećim funkcionalnostima:
+- Kreirati funkciju enableInterrupt1() koja omogućuje korišćenje interapta za dugme BTN1.
+- Kreirati funkciju disableInterrupt1() koja onemogućuje korišćenje interapta za dugme BTN1.
+- Kreirati funkciju getInterrupatEnable1() koja vraća da li je omogućen prekid na dugmetu BTN1.
+- Proširiti funkconalnost handler-a da podržava i dugme BTN2.
+- Omogućiti da pri paljenju/gašenju dugmeta BTN2 bude 
+  omogućeno/onemogućeno korišćenje interapta na dugmetu BTN1.
+*/
+
 typedef void (*interruptFunc) ();
 
-// promenljive za rad sa prekidom za dugme BTN1
-int BTN1 = 4;
-int BTN1_old_state;
-int BTN1_new_state;
-interruptFunc BTN1_f_rising;
-interruptFunc BTN1_f_falling;
-int BTN1_enabled;
+#define BTN1 4
+#define BTN2 34
 
-// definisemo promenljive za rad sa prekidom za dugme BTN2
-int BTN2 = 34;
-int BTN2_old_state;
-int BTN2_new_state;
-interruptFunc BTN2_f_rising;
-interruptFunc BTN2_f_falling;
-int BTN2_enabled;
+int staro_stanje_1;
+int novo_stanje_1;
+interruptFunc dugme_rising_1;
+interruptFunc dugme_falling_1;
+int dugme_omoguceno_1;
 
-// postavljanje prekida za dugme1
-void attachInterupt1(interruptFunc f, int mode)
+int staro_stanje_2;
+int novo_stanje_2;
+interruptFunc dugme_rising_2;
+interruptFunc dugme_falling_2;
+int dugme_omoguceno_2;
+
+void attachInterrupt_1(interruptFunc f, int mode)
 {
 	if (mode == RISING)
-		BTN1_f_rising = f;
+		dugme_rising_1 = f;
 	else
-		BTN1_f_falling = f;
+		dugme_falling_1 = f;
 }
 
-// uklanjanje prekida za dugme1
-void deattachInterupt1(int mode)
+void deattachInterrupt_1(int mode)
 {
 	if (mode == RISING)
-		BTN1_f_rising = NULL;
+		dugme_rising_1 = NULL;
 	else
-		BTN1_f_falling = NULL;
+		dugme_falling_1 = NULL;
 }
 
-// funkcija koja pali lampicu 27
-void myInterruptOn()
+void interruptOn()
 {
 	digitalWrite(27, HIGH);
 }
 
-// funkcija koja gasi lampicu 27
-void myInterruptOff()
+void interruptOff()
 {
 	digitalWrite(27, LOW);
 }
 
-void enableInterrupt1()
+void enableInterrupt_1()
 {
-	BTN1_enabled = true;
+	dugme_omoguceno_1 = true;
 }
 
-void disableInterrupt1()
+void disableInterrupt_1()
 {
-	BTN1_enabled = false;
+	dugme_omoguceno_1 = false;
 }
 
-// postavljanje prekida za dugme2
-void attachInterupt2(interruptFunc f, int mode)
-{
-	if (mode == RISING)
-		BTN2_f_rising = f;
-	else
-		BTN2_f_falling = f;
-}
-
-// uklanjanje prekida za dugme2
-void deattachInterupt2(int mode)
+void attachInterrupt_2(interruptFunc f, int mode)
 {
 	if (mode == RISING)
-		BTN2_f_rising = NULL;
+		dugme_rising_2 = f;
 	else
-		BTN2_f_falling = NULL;
+		dugme_falling_2 = f;
 }
 
-void enableInterrupt2()
+void deattachInterrupt_2(int mode)
 {
-	BTN2_enabled = true;
+	if (mode == RISING)
+		dugme_rising_2 = NULL;
+	else
+		dugme_falling_2 = NULL;
 }
 
-void disableInterrupt2()
-{	
-	BTN2_enabled = false;
-}
-
-void myInterrupt1Enable()
+void enableInterrupt_2()
 {
-   enableInterrupt1();
+	dugme_omoguceno_2 = true;
 }
 
-void myInterrupt1Disable()
+void disableInterrupt_2()
 {
-   disableInterrupt1();
+	dugme_omoguceno_2 = false;
 }
 
-void dugme(int id, void * tptr)
+void dozvoliInterrupt_1()
 {
-	BTN1_new_state = digitalRead(BTN1);
+	enableInterrupt_1();
+}
 
-	if (BTN1_enabled) 
+void onemoguciInterrupt_1()
+{
+	disableInterrupt_1();
+}
+
+void dugme_1(int id, void* tptr)
+{
+	novo_stanje_1 = digitalRead(BTN1);
+
+	if (dugme_omoguceno_1)
 	{
-		if (BTN1_new_state == 1 && BTN1_old_state == 0)
-		{
-			if (BTN1_f_rising != NULL)
-				(*BTN1_f_rising)();
-		} 
-		else if (BTN1_new_state == 0 && BTN1_old_state == 1)
-		{
-			if (BTN1_f_falling != NULL)
-				(*BTN1_f_falling)();
-		}
+		if (novo_stanje_1 == 1 && staro_stanje_1 == 0)
+			if (dugme_rising_1 != NULL)
+				(*dugme_rising_1)();
+		else if (novo_stanje_1 == 0 && staro_stanje_1 == 1)
+			if (dugme_falling_1 != NULL)
+				(*dugme_falling_1)();
+	}	
+
+	staro_stanje_1 = novo_stanje_1;
+}
+
+void dugme_2(int id, void* tptr)
+{
+	novo_stanje_2 = digitalRead(BTN2);
+
+	if (dugme_omoguceno_2)
+	{
+		if (novo_stanje_2 == 1 && staro_stanje_2 == 0)
+			if (dugme_rising_2 != NULL)
+				(*dugme_rising_2)();
+		else if (novo_stanje_2 == 0 && staro_stanje_2 == 1)
+			if (dugme_falling_2 != NULL)
+				(*dugme_falling_2)();
 	}
 
-	BTN1_old_state = BTN1_new_state;
+	staro_stanje_2 = novo_stanje_2;
 }
 
-void dugme2(int id, void * tptr)
-{
-	BTN2_new_state = digitalRead(BTN2);
-
-	if (BTN2_enabled) 
-	{
-		if (BTN2_new_state == 1 && BTN2_old_state == 0)
-		{
-			if (BTN2_f_rising != NULL)
-				(*BTN2_f_rising)();
-		} 
-		else if (BTN2_new_state == 0 && BTN2_old_state == 1)
-		{
-			if (BTN2_f_falling != NULL)
-				(*BTN2_f_falling)();
-		}
-	}
-
-	BTN2_old_state = BTN2_new_state;
-}
-
-void setup() 
+void setup()
 {
 	pinMode(27, OUTPUT);
 	digitalWrite(27, LOW);
 
-	BTN1_old_state = digitalRead(BTN1);
-	BTN2_old_state = digitalRead(BTN2);
+	staro_stanje_1 = digitalRead(BTN1);
+	staro_stanje_2 = digitalRead(BTN2);
 
-	BTN1_f_rising = NULL;
-	BTN1_f_falling = NULL;
-	
-	if (BTN2_old_state == 0) 
-		disableInterrupt1();
-	else 
-		enableInterrupt1();
+	dugme_rising_1 = NULL;
+	dugme_falling_1 = NULL;
+	dugme_rising_2 = NULL;
+	dugme_falling_2 = NULL;
 
-	BTN2_f_rising = NULL;
-	BTN2_f_falling = NULL;
-	
-	enableInterrupt2();
+	if (staro_stanje_2 == 0)
+		onemoguciInterrupt_1();
+	else
+		dozvoliInterrupt_1();
 
-	attachInterupt1(myInterruptOn, RISING);
-	attachInterupt1(myInterruptOff, FALLING);
+	enableInterrupt_2();
 
-	attachInterupt2(myInterrupt1Enable, RISING);
-	attachInterupt2(myInterrupt1Disable, FALLING);
+	attachInterrupt_1(interruptOn, RISING);
+	attachInterrupt_1(interruptOff, FALLING);
 
-	createTask(dugme,  20, TASK_ENABLE, NULL);
-	createTask(dugme2, 20, TASK_ENABLE, NULL);
+	attachInterrupt_2(dozvoliInterrupt_1, RISING);
+	attachInterrupt_2(onemoguciInterrupt_1, FALLING);
+
+	createTask(dugme_1, 20, TASK_ENABLE, NULL);
+	createTask(dugme_2, 20, TASK_ENABLE, NULL);
 }
 
-void loop() {
+void loop()
+{
 
 }
