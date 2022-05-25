@@ -1,40 +1,44 @@
-#define PIN_BTN1 4
+/*
+Napisati program koji koristeći task dugme() broji broj 
+pritisaka na dugme koji su duži od 2s i nakon svakog takvog 
+pritiska ispisuje broj pritisaka na serijski monitor.
+*/
 
-int staroStanje, staroVreme, brojac;
+#define BTN1 4
 
-void dugme1(int id, void * tptr)
+int staro_stanje;
+int staro_vreme;
+int brojac;
+
+void dugme(int id, void* tptr)
 {
-    int novoStanje = digitalRead(PIN_BTN1);
+	int novo_stanje = digitalRead(BTN1);
 
-	if (staroStanje == 1 && novoStanje == 0) 
+	if (staro_stanje == 1 && novo_stanje == 0)
 	{
-        if (millis() - staroVreme >= 2000) 
-		{
-            brojac++;
-            Serial.println(brojac);
-		}
-	} 
-	else if (staroStanje == 0 && novoStanje == 1) 
+		if (millis() - staro_vreme >= 2000)
+			Serial.println(++brojac);
+	}
+	else if (staro_stanje == 0 && novo_stanje == 1)
 	{
-        staroVreme = millis();
+		staro_vreme = millis();
 	}
 
-	staroStanje = novoStanje;
+	staro_stanje = novo_stanje;
 }
 
 void setup()
 {
-    Serial.begin(9600);	
-    staroStanje = digitalRead(PIN_BTN1);
+	Serial.begin(9600);
 
-    staroVreme = millis();
-    brojac = 0;
+	staro_stanje = digitalRead(BTN1);
+	staro_vreme = millis();
+	brojac = 0;
 
-    createTask(dugme1, 50, TASK_ENABLE, NULL);
+	createTask(dugme, 50, TASK_ENABLE, NULL);
 }
 
 void loop()
 {
 
 }
-
