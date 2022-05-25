@@ -1,16 +1,20 @@
-void kopiranje(int id, void * tptr) 
-{
-	static int na_redu_je = 0;
-	static int prvi;
-	static int drugi;
+/*
+Napisati program koji učitava dva broja sa serijskog ulaza, 
+sabira ih i ispisuje njihov zbir.
+*/
 
-	if (na_redu_je == 0)
+void sabiranje(int id, void* tptr) 
+{
+	static int na_redu_je = 1;
+	static int prvi, drugi;
+
+	if (na_redu_je == 1)
 	{
 		if (Serial.available())
 		{
 			const char* sabirak1 = Serial.readString().c_str();
 			prvi = atoi(sabirak1);
-			na_redu_je = 1;
+			na_redu_je = 2;
 		}
 	}
 	else
@@ -20,7 +24,7 @@ void kopiranje(int id, void * tptr)
 			const char* sabirak2 = Serial.readString().c_str();
 			drugi = atoi(sabirak2);
 			Serial.println(prvi + drugi);
-			na_redu_je = 0;
+			na_redu_je = 1;
 		}
 	}
 }
@@ -28,7 +32,7 @@ void kopiranje(int id, void * tptr)
 void setup()
 {
   	Serial.begin(9600);
-  	createTask(kopiranje, 1000, TASK_ENABLE, NULL);
+  	createTask(sabiranje, 1000, TASK_ENABLE, NULL);
 }
 
 void loop()
