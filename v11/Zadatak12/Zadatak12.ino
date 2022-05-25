@@ -1,14 +1,17 @@
-#define dump(v) Serial.println(v) 
+/*
+Napisati program koji pali lampice na pinovima od 26 do 33 u krug. 
+Ukoliko je upaljen taster SW2 na pinu 7, rotirati lampice od manjih 
+ka većim pinovima, a u suprotnom od većih ka manjim.
+*/
 
-#define LED_1 26
-#define LED_NUM 8
+#define LED1 26
 
 void setup() 
 {
-	for (int i = 0; i < LED_NUM; i++)
+	for (int i = 0; i < 8; i++)
 	{
-		pinMode(LED_1 + i, OUTPUT);
-		digitalWrite(LED_1 + i, LOW);
+		pinMode(LED1 + i, OUTPUT);
+		digitalWrite(LED1 + i, LOW);
 	}
 	
 	Serial.begin(9600);  
@@ -16,28 +19,27 @@ void setup()
 
 void loop() 
 {
-	// Led Counter
-	static int lcnt = 0;
+	// samo se jednom inicijalizuje na 0 ??
+	static int br_lampice = 0;
 
-	// prvo ugasi tekuci
-	digitalWrite(LED_1 + lcnt, LOW);
+	// prvo ugasi trenutno upaljenu lampicu
+	digitalWrite(LED1 + br_lampice, LOW);
 	
-	// Show 1: pali na desno
+	// pali na desno
 	if (digitalRead(7))
 	{		
-		if (lcnt == 0) 
-			lcnt = LED_NUM - 1;
+		if (br_lampice == 0) 
+			br_lampice = 8 - 1;
 		else 
-			lcnt = lcnt - 1;  
+			--br_lampice;
 	}
-	// Show 2: pali na levo
+	// pali na levo
 	else
 	{
-		lcnt = (lcnt + 1) % LED_NUM;
+		br_lampice = ++br_lampice % 8;
 	}
 	
-	// upali skledeci LED
-	digitalWrite(LED_1 + lcnt, HIGH);    
-
+	// upali lampicu koja je dosla na red (br_lampice)
+	digitalWrite(LED1 + br_lampice, HIGH);    
 	delay(1000);
 }
