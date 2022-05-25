@@ -1,35 +1,42 @@
-#define PIN_LED1 33
-#define PIN_BTN4 37
+/*
+Kreirati program koji koristeći task blink_task1 pali i gasi lampicu LED8 
+na pinu 33 u zavisnosti od dugmeta BTN4 na pinu 37.
 
-int blink1_id, blink2_id;
-unsigned long blink1_var;
+- Pratiti stanje dugmeta BTN4 i otkriti da li je stisnut duže od 2 sekunde. 
+  Po uočavanju ovakvog događaja, na silaznoj ivici programski resetovati ploču uc32.
+- Koristiti primitive millis i executeSoftReset.
+- Promenu stanja dugmeta pratiti na svakih 50 ms i ukoliko je stanje 
+  različito od prethodnog, prepoznati promenu stanja.
+*/
 
-unsigned short stat2 = TASK_DISABLE;
-unsigned long period1, period2;
+#define LED8 33
+#define BTN4 37
 
-void blink_task1(int id, void * tptr)
+int blink1_id;
+
+void blink_task1(int id, void *tptr)
 {
-	static int startTime = millis();
+	static int pocetno_vreme = millis();
 	static int period = 0;
 
-	int BTN4 = digitalRead(PIN_BTN4);
+	int dugme = digitalRead(BTN4);
 
-	if (BTN4 == HIGH) 
+	if (dugme == HIGH)
 	{
-		digitalWrite(PIN_LED1, HIGH);
-		period = millis() - startTime;
-	} 
-	else 
+		digitalWrite(LED8, HIGH);
+		period = millis() - pocetno_vreme;
+	}
+	else
 	{
-		digitalWrite(PIN_LED1, LOW);
-		
+		digitalWrite(LED8, LOW);
+
 		if (period > 2000)
 		{
 			executeSoftReset(RUN_SKETCH_ON_BOOT);
 		}
-		else 
+		else
 		{
-			startTime = millis();
+			pocetno_vreme = millis();
 			period = 0;
 		}
 	}
@@ -37,14 +44,12 @@ void blink_task1(int id, void * tptr)
 
 void setup()
 {
-	pinMode(PIN_LED1, OUTPUT);
-
-	blink1_id = createTask(blink_task1, 50, TASK_ENABLE, &blink1_var);
+	pinMode(LED8, OUTPUT);
+	
+	blink1_id = createTask(blink_task1, 50, TASK_ENABLE, NULL);
 }
 
 void loop()
 {
 
 }
-
-
