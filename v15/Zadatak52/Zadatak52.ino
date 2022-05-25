@@ -1,32 +1,41 @@
-const int analogInPin = A0;
-const int analogOutPin = 33;
+/*
+Umesto funkcije analogWrite(), razviti svoju PWM funkciju, shodno sledećim zahtevima:
+- Širina osnovnog PWM impulsa (bita) je konfigurabilna, i jednaka umnošku od 1ms.
+- Period PWM jednak je trajanju 1024 bita.
+- Promena vrednosti očitane sa potenciometra menja odnos signal/pauza.
+*/
 
-int startTime = 0;
+const int analog_in = A0;
+const int analog_out = 33;
 
-#define PWM_BIT_TIME 6
-#define PWM_PERIOD (PWM_BIT_TIME * 1024)
+int pocetno_vreme;
 
-void potenciometar(int id, void * tptr)
+#define bit_vreme 6
+#define period (bit_vreme * 1024)
+
+void potenciometar(int id, void* tptr)
 {
-	int sensorValue = analogRead(analogInPin);
-	int outputValue = sensorValue*PWM_BIT_TIME;
+	int senzor = analogRead(analog_in);
+	int skaliran = senzor * bit_vreme;
 
-	if (millis() - startTime < outputValue)
-		digitalWrite(analogOutPin, HIGH);
-	else if (millis() - startTime < PWM_PERIOD)
-		digitalWrite(analogOutPin, LOW);
+	// lampica je upaljena
+	if (millis() - pocetno_vreme < skaliran)
+		digitalWrite(analog_out, HIGH);
+	// lampica je ugasena
+	else if (millis() - pocetno_vreme < period)
+		digitalWrite(analog_out, LOW);
+	// novi ciklus
 	else
-		startTime = millis();
+		pocetno_vreme = millis();
 }
 
 void setup()
 {
 	Serial.begin(9600);
-	pinMode(analogOutPin, OUTPUT);
+	pinMode(analog_out, OUTPUT);
 
-	startTime = millis();
-	
-	createTask(potenciometar, PWM_BIT_TIME, TASK_ENABLE, NULL);
+	pocetno_vreme = millis();
+	createTask(potenciometar, bit_vreme, TASK_ENABLE, NULL);
 }
 
 void loop()
