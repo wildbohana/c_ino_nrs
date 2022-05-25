@@ -1,31 +1,35 @@
-const int analogInPin = A0;
+/*
+Napisati program koji sa potenciometra čita vrednost 
+ulaza i tu vrednost ispisuje na 8 lampica. Broj upaljenih 
+lampica krenuvši od lampice na pinu 26 treba da bude 
+srazmeran jačini ulaza sa potenicometra.
 
-#define PWM_BIT_TIME 6
-#define PWM_PERIOD (PWM_BIT_TIME * 1024)
+*/
 
-void potenciometar(int id, void * tptr)
+const int analog_in = A0;
+
+void potenciometar(int id, void* tptr)
 {
-    for (int i = 26; i < 34; i++)
-        digitalWrite(i, LOW);
+	int jacina = analogRead(analog_in);
+	int br_lampica = map(jacina, 0, 1023, 0, 8);
 
-    int jacina = analogRead(analogInPin);
-    int brojLampica = map(jacina, 0, 1023, 0, 8);
-
-    for (int i = 0; i < brojLampica ; i++)
-        digitalWrite(26 + i, HIGH);
+	for (int i = 0; i < 8; i++)
+	{
+		if (i < br_lampica)
+			digitalWrite(26 + i, HIGH);
+		else
+			digitalWrite(26 + i, LOW);
+	}
 }
 
 void setup()
 {
-    Serial.begin(9600);
+	Serial.begin(9600);
+	
+	for (int i = 26; i < 34; i++)
+		pinMode(i, OUTPUT);
 
-    for (int i = 26; i < 34; i++)
-        pinMode(i, OUTPUT);
-
-	// nije obavezno
-	pinMode(analogInPin, INPUT);
-
-    createTask(potenciometar, 50, TASK_ENABLE, NULL);
+	createTask(potenciometar, 50, TASK_ENABLE, NULL);
 }
 
 void loop()
