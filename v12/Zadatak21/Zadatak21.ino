@@ -1,35 +1,39 @@
-#define PIN_LED1 33
-#define PIN_LED2 27
-#define PIN_SW2   7
- 
-int blink1_id, blink2_id;
-unsigned long blink1_var;
+/*
+Napisati program koji pali i gasi led diode LED8 i LED2 na pinovima 33 i 27 
+na svakih 500, odnosno 25 milisekundi. 
+Kreirati dva task-a, blink_task1 i blink_task2, za svaku lampicu po jedan. 
+Nakon toga, kreirati task blink_task3 koja omogućuje/onemogućuje task 
+blink_task2 u zavisnosti od stanja prekidača SW2.
+*/
 
-unsigned short stat2 = TASK_DISABLE;
-unsigned long period1, period2;
+#define LED8 33
+#define LED2 27
+#define SW2 7
 
-void blink_task1(int id, void * tptr) 
+int blink1_id;
+int blink2_id;
+
+int stat2 = TASK_DISABLE;
+
+void blink_task1(int id, void* tptr)
 {
-	digitalWrite(PIN_LED1, !digitalRead(PIN_LED1));
+	digitalWrite(LED8, !digitalRead(LED8));
 }
 
-void blink_task2(int id, void * tptr) 
+void blink_task2(int id, void* tptr)
 {
-	digitalWrite(PIN_LED2, !digitalRead(PIN_LED2));
+	digitalWrite(LED2, !digitalRead(LED2));
 }
 
-void blink_task3(int id, void * tptr) 
+void blink_task3(int id, void* tptr)
 {
 	stat2 = getTaskState(blink2_id);
 
-	if (digitalRead(PIN_SW2))
+	if (digitalRead(SW2))
 	{
 		if (stat2 == TASK_DISABLE)
 		{
-			// postavi RANDOM vreme rasporedjivanja
-			int rTime = random(1, 10) * 25;
-
-			setTaskPeriod(blink2_id, rTime);
+			setTaskPeriod(blink2_id, 100);
 			setTaskState(blink2_id, TASK_ENABLE);
 		}
 	}
@@ -38,22 +42,22 @@ void blink_task3(int id, void * tptr)
 		if (stat2 == TASK_ENABLE)
 		{
 			setTaskState(blink2_id, TASK_DISABLE);
-			digitalWrite(PIN_LED2, LOW);
+			digitalWrite(LED2, LOW);
 		}
 	}
 }
- 
-void setup() 
+
+void setup()
 {
-   pinMode(PIN_LED1, OUTPUT);
-   pinMode(PIN_LED2, OUTPUT);
-   
-   blink1_id = createTask(blink_task1, 500, TASK_ENABLE, &blink1_var);
-   blink2_id = createTask(blink_task2, 25, stat2, NULL);
-   createTask(blink_task3, 1000, TASK_ENABLE, NULL);
+	pinMode(LED2, OUTPUT);
+	pinMode(LED8, OUTPUT);
+
+	blink1_id = createTask(blink_task1, 500, TASK_ENABLE, NULL);
+	blink2_id = createTask(blink_task2, 25, stat2, NULL);
+	createTask(blink_task3, 1000, TASK_ENABLE, NULL);
 }
- 
-void loop() 
+
+void loop()
 {
 
 }
