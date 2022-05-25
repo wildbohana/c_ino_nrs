@@ -1,78 +1,78 @@
-// pokazivac na funkciju tipa void bez parametara
+/*
+Napisati program koji pri pritisku dugmeta BTN1 (pin 4) pali lampicu 
+LD2 (pin 27), a pri puštanju dugmeta BTN1, gasi lampicu LD2.
+- Paljenje i gašenje lampice realizovati preko preko interapta povezanih na dugme BTN1.
+- Kako dugmadi nisu podrzana u interaptima, kreirati kompletan handler 
+  za dugme BTN1, koji podrazumeva i funkcije attachInterrupt1() i 
+  deattachInterrupt1() slične postojećim funkcijama.
+*/
+
 typedef void (*interruptFunc) ();
 
-// promenljive za rad sa prekidom za dugme BTN1
-int BTN1 = 4;
-int BTN1_old_state;
-int BTN1_new_state;
-interruptFunc BTN1_f_rising;
-interruptFunc BTN1_f_falling;
+#define BTN1 4
 
-// pravljenje prekida za dugme1
-void attachInterupt1(interruptFunc f, int mode)
-{
-	if (mode == RISING) 
-		BTN1_f_rising = f;
-	else 
-		BTN1_f_falling = f;
-}
+int staro_stanje;
+int novo_stanje;
+interruptFunc dugme_rising;
+interruptFunc dugme_falling;
 
-// uklanjanje prekida za dugme1
-void deattachInterupt1(int mode)
+void attachInterrupt(interruptFunc f, int mode)
 {
 	if (mode == RISING)
-    	BTN1_f_rising = NULL;
+		dugme_rising = f;
 	else
-    	BTN1_f_falling = NULL;
+		dugme_falling = f;
 }
 
-// funkcija koja pali lampicu 27
-void myInterruptOn()
+void deattachInterrupt(int mode)
+{
+	if (mode == RISING)
+		dugme_rising = NULL;
+	else
+		dugme_falling = NULL;
+}
+
+void interruptOn()
 {
 	digitalWrite(27, HIGH);
 }
 
-// funkcija koja gasi lampicu 27
-void myInterruptOff()
+void interruptOff()
 {
 	digitalWrite(27, LOW);
 }
 
-void dugme(int id, void * tptr)
+void dugme(int id, void* tptr)
 {
-	BTN1_new_state = digitalRead(BTN1);
+	novo_stanje = digitalRead(BTN1);
 
-	if (BTN1_new_state == 1 && BTN1_old_state == 0)
-	{
-		if (BTN1_f_rising != NULL)
-			(*BTN1_f_rising)();
-	} 
-	else if (BTN1_new_state == 0 && BTN1_old_state == 1)
-	{
-		if (BTN1_f_falling != NULL)
-			(*BTN1_f_falling)();
-	}
+	if (novo_stanje == 1 && staro_stanje == 0)
+		if (dugme_rising != NULL)
+			(*dugme_rising)();
+	else if (novo_stanje == 0 && staro_stanje == 1)
+		if (dugme_falling != NULL)
+			(*dugme_falling)();
 
-	BTN1_old_state = BTN1_new_state;
+	staro_stanje = novo_stanje;
 }
 
-void setup() 
+void setup()
 {
 	pinMode(27, OUTPUT);
 	digitalWrite(27, LOW);
 
-	BTN1_old_state = digitalRead(BTN1);
+	staro_stanje = digitalRead(BTN1);
 
-	BTN1_f_rising = NULL;
-	BTN1_f_falling = NULL;
+	dugme_rising = NULL;
+	dugme_falling = NULL;
 
-	attachInterupt1(myInterruptOn, RISING);
-	attachInterupt1(myInterruptOff, FALLING);
+	attachInterrupt(interruptOn, RISING);
+	attachInterrupt(interruptOff, FALLING);
 
 	createTask(dugme, 20, TASK_ENABLE, NULL);
 }
 
-void loop() 
+void loop()
 {
-
+	
 }
