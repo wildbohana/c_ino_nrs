@@ -1,37 +1,41 @@
-#define LED_8 33
+/*
+Napisati program koji koristeći task blink_task1 pali i gasi led diodu 
+LD8 na pinu 33 na svakih 100 milisekundi. Kreirati i task blink_task2, 
+koji na svakih 25 milisekundi proverava stanje prekidača na pinovima 
+2, 7, 8, i 35, broji koliko ima upaljenih prekidača i u zavisnosti od toga, 
+postavlja period blinkanja lampice LD8 na 100, 200, 300, 400 ili 500ms. 
+Period blinkanja menjati periodom na koji se startuje blink_task1
+*/
 
-int blink1_id, blink2_id;
-unsigned int brLampica;
+#define LED8 33
 
-void blink1_task(int id, void * tptr)
+int blink1_id;
+int br_lampica;
+
+void blink_task1(int id, void * tptr)
 {
-    digitalWrite(LED_8, !digitalRead(LED_8));
+    digitalWrite(LED8, !digitalRead(LED8));
 }
 
-void blink2_task(int id, void * tptr)
+void blink_task2(int id, void * tptr)
 {
-    brLampica = 0;
+    br_lampica = 0;
 	
-    if (digitalRead(2))  brLampica++;
-    if (digitalRead(7))  brLampica++;
-    if (digitalRead(8))  brLampica++;
-    if (digitalRead(35)) brLampica++;
+    if (digitalRead(2))  br_lampica++;
+    if (digitalRead(7))  br_lampica++;
+    if (digitalRead(8))  br_lampica++;
+    if (digitalRead(35)) br_lampica++;
 
-    setTaskPeriod(blink1_id, ++brLampica * 100);
+    setTaskPeriod(blink1_id, ++br_lampica * 100);
 }
 
 void setup()
 {
-    pinMode(LED_8, OUTPUT);
+	// pinovi 2, 7, 8, 35 se podrazumevaju kao input
+    pinMode(LED8, OUTPUT);
 
-    // ovo ne mora jer se ovi pinovi podrazumevaju kao INPUT
-    pinMode(2,  INPUT);
-    pinMode(7,  INPUT);
-    pinMode(8,  INPUT);
-    pinMode(35, INPUT);
-
-    blink1_id = createTask(blink1_task,  100, TASK_ENABLE, NULL);
-    blink2_id = createTask(blink2_task, 1000, TASK_ENABLE, NULL);
+    blink1_id = createTask(blink_task1, 100, TASK_ENABLE, NULL);
+    createTask(blink_task2, 1000, TASK_ENABLE, NULL);
 }
 
 void loop()
