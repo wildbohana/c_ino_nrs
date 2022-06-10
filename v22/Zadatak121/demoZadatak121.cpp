@@ -16,65 +16,69 @@ najcesce izmerena u prostoriji.
 
 extern serial Serial;
 
-#define myPIN 26
-int oldState, periodTime, startTime, elapsedTime;
+#define pin26 26
+int staroStanje;
+int vremePerioda;
+int pocetnoVreme;
+int protekloVreme;
 
-#define numOfLastValues 20
-int numOfValues;
-int values[numOfLastValues];
-int brPojavljivanja[41];
-int numOfErrors;
-int suma = 0;
-int suma20 = 0;
+#define brPoslednjihVrednosti 20
+int brVrednosti;
+int vrednosti[brPoslednjihVrednosti] = {0};
+int brPojavljivanja[41] = {0};
+int brGresaka;
+int suma;
+int suma20;
 
 void brojevi(int id, void * tptr)
 {
-    static int first = true;
-    int newState = digitalRead(myPIN);
+    static int prvi = true;
+	
+    int novoStanje = digitalRead(pin26);
 
 	// dioda iskljucena
-	if (oldState == 1  && newState == 0) 
+	if (staroStanje == 1  && novoStanje == 0) 
 	{
-        elapsedTime = millis() - startTime;
+        protekloVreme = millis() - pocetnoVreme;
 	} 
 	// dioda ukljucena
-	else if (oldState == 0 && newState == 1)
+	else if (staroStanje == 0 && novoStanje == 1)
 	{
-        int time = millis();
-        periodTime = time - startTime;
-        startTime = time;
+        int vreme = millis();
+        vremePerioda = vreme - pocetnoVreme;
+        pocetnoVreme = vreme;
 
-        if (!first) 
+        if (!prvi) 
 		{
-			Serial.print(elapsedTime);
-			Serial.print(' ');
-			Serial.println(periodTime);
+			brVrednosti++;
 
-			// prosecna temperatura za poslednjih 20 merenja
-			// ulazni signal predstavlja temparaturu u prostoriji u rasponu od 1 do 40 stepeni
-			int temperatura = map(elapsedTime, 0, 2000, 0, 40);
-			suma20 = suma20 - values[numOfValues % numOfLastValues] + temperatura;
-			values[numOfValues % numOfLastValues] = temperatura;
+			Serial.print(protekloVreme);
+			Serial.print(' ');
+			Serial.println(vremePerioda);
+
+			int temperatura = map(protekloVreme, 0, 2000, 0, 40);
+			suma20 = suma20 - vrednosti[brVrednosti % brPoslednjihVrednosti] + temperatura;
+			vrednosti[brVrednosti % brPoslednjihVrednosti] = temperatura;
 
 			// prosecna temperatura za sva merenja
 			suma = suma + temperatura;
 			brPojavljivanja[temperatura]++;
-			numOfValues++;
 
 			Serial.print("Prosecna temperatura: ");
-			Serial.println(suma / numOfValues);
+			Serial.println(suma / brVrednosti);
 
-			if (numOfValues >= numOfLastValues) 
+			if (brVrednosti >= brPoslednjihVrednosti) 
 			{
 				Serial.print("Prosecna temperatura poslednjih 20 merenja: ");
-				Serial.println(suma20 / numOfLastValues);
+				Serial.println(suma20 / brPoslednjihVrednosti);
 			}
 
 			// nakon svakih 20 prikupljenih temperatura, ispisati koja  
 			// temperatura je najcesce izmerena u prostoriji.
-			if (numOfValues % numOfLastValues == 0) 
+			if (brVrednosti % brPoslednjihVrednosti == 0) 
 			{
 				int maxJ = 0;
+				
 				for (int j = 1; j <= 40; j++)
 					if (brPojavljivanja[j] > brPojavljivanja[maxJ])
 						maxJ = j;
@@ -83,28 +87,26 @@ void brojevi(int id, void * tptr)
 				Serial.println(maxJ);
 			}
         }
-        first = false;
+        prvi = false;
 	}
-	oldState = newState;
+	staroStanje = novoStanje;
 }
 
 void setup()
 {
 	Serial.begin(9600);
 
-	pwmSin(myPIN, 2000, 0.0);
+	pwmSin(pin26, 2000, 0.0);
 
-	oldState = digitalRead(myPIN);
-	startTime = millis();
-	elapsedTime = 0;
-	periodTime = 0;
-	numOfValues = 0;
-	
-	for (int i = 0; i < numOfLastValues; i++)
-		values[i] = 0;
-	for (int i = 0; i <= 40; i++)
-		brPojavljivanja[i] = 0;
-		
+	staroStanje = digitalRead(pin26);
+	pocetnoVreme = millis();
+	protekloVreme = 0;
+	vremePerioda = 0;
+
+	brVrednosti = 0;		
+	suma = 0;
+	suma20 = 0;
+
 	createTask(brojevi, 1, TASK_ENABLE, NULL);
 }
 
