@@ -19,7 +19,7 @@ void broj(int id, void* tptr)
     if (available())
     {
 		// dd.mm.yyyy. hh:mm:ss num
-        char *r = read();
+        char* r = read();
         Serial.print(r);
 
         // broj pocinje od 21. karaktera
