@@ -4,29 +4,30 @@ novih podataka ispisuje podatke na ekran. Ukoliko je pristigla najveca vrednost
 do sada, ispisati datum i vreme kada je vrednost stigla.
 */
 
-#include<arduinoPlatform.h>
-#include<tasks.h>
-#include<interrupts.h>
-#include<stdio.h>
-#include<serial.h>
+#include <arduinoPlatform.h>
+#include <tasks.h>
+#include <interrupts.h>
+#include <stdio.h>
+#include <serial.h>
 #include <pwm.h>
-#include<data.h>
+#include <data.h>
 
 extern serial Serial;
 
-int maxBr = -1;
+int najveci;
 
 void brojevi(int id, void *tptr)
 {
     if (available())
     {
-		// prva cetiri bajta u baferu su velicina bafera, pstalo su podaci
         char *buffer = readAll();
         int velicina = *((int*) buffer);
 
         for (int i = 0; i < velicina; i++)
         {
-            char datum[15], vreme[15];
+            char datum[15];
+			char vreme[15];
+
             strcpy(datum, buffer + sizeof(int) + i * slogSize() + 0);
             strcpy(vreme, buffer + sizeof(int) + i * slogSize() + 15);
 			
@@ -36,10 +37,12 @@ void brojevi(int id, void *tptr)
             Serial.print("Vrednost: ");
             Serial.println(broj);
 
-            if (broj > maxBr)
+            if (broj > najveci)
 			{
-                maxBr = broj;
+                najveci = broj;
 
+				// 01 34 6789
+				// dd.mm.yyyy.
                 int dan = (datum[0] - '0') * 10 + datum[1] - '0';
                 int mesec = (datum[3] - '0') * 10 + datum[4] - '0';
 
@@ -55,6 +58,8 @@ void brojevi(int id, void *tptr)
                 Serial.print(" Godina: ");
                 Serial.println(godina);
 
+				// 01 34 67
+				// hh.mm.ss
                 int sat = (vreme[0] - '0') * 10 + vreme[1] - '0';
                 int minut = (vreme[3] - '0') * 10 + vreme[4] - '0';
                 int sekunda = (vreme[6] - '0') * 10 + vreme[7] - '0';
@@ -77,6 +82,7 @@ void setup()
 
     startStopDataGeneration(START_GENERATION, RANDOM, 0, 100, 0.0, 400);
 
+	najveci = -1;
     createTask(brojevi, 1000, TASK_ENABLE,  NULL);
 }
 
