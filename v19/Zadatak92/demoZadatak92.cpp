@@ -14,65 +14,65 @@ ispisati da je došlo do greške, prijaviti redni broj greške kao i procenat gr
 
 extern serial Serial;
 
-#define myPIN 26
-int oldState;
-int periodTime;
-int startTime;
-int elapsedTime;
+#define pin26 26
+int staroStanje;
+int vremePerioda;
+int pocetnoVreme;
+int protekloVreme;
 
-#define numOfLastValues 10
-int numOfValues;
-int values[numOfLastValues];
-int numOfErrors;
+#define brPoslednjihVrednosti 10
+int brVrednosti;
+int vrednosti[brPoslednjihVrednosti];
+int brGresaka;
 
 void brojevi(int id, void* tptr)
 {
-    static int first = true;
+    static int prvi = true;
 
-    int newState = digitalRead(myPIN);
+    int novoStanje = digitalRead(pin26);
 
 	// dioda iskljucena
-	if (oldState == 1 && newState == 0) 
+	if (staroStanje == 1 && novoStanje == 0) 
 	{
-        elapsedTime = millis() - startTime;
+        protekloVreme = millis() - pocetnoVreme;
 	} 
 	// dioda ukljucena
-	else if (oldState == 0 && newState == 1) 
+	else if (staroStanje == 0 && novoStanje == 1) 
 	{
-        int time = millis();
-        periodTime = time - startTime;
-        startTime = time;
+        int vreme = millis();
+        vremePerioda = vreme - pocetnoVreme;
+        pocetnoVreme = vreme;
 
-        if (!first) 
+        if (!prvi) 
 		{
-			Serial.print(elapsedTime);
+			Serial.print(protekloVreme);
 			Serial.print(' ');
-			Serial.println(periodTime);
+			Serial.println(vremePerioda);
 
-			values[numOfValues % numOfLastValues] = elapsedTime;
+			vrednosti[brVrednosti % brPoslednjihVrednosti] = protekloVreme;
 
-			// besmisleno je proveravati vrednosti za prethodna 2 ako nemamo te vrednosti upisane
-			if (numOfValues >= 3) 
+			if (brVrednosti >= 3) 
 			{
-				int prev1 = (numOfValues - 1) % numOfLastValues;
-				int prev2 = (numOfValues - 2) % numOfLastValues;
+				int prethodni1 = (brVrednosti - 1) % brPoslednjihVrednosti;
+				int prethodni2 = (brVrednosti - 2) % brPoslednjihVrednosti;
 
-				// provera da li se duzina signala razlikuje vise od 10% od prethodna dva
-				if ((elapsedTime < values[prev1] * 0.9 || elapsedTime > values[prev1] * 1.1) 
-				&&  (elapsedTime < values[prev2] * 0.9 || elapsedTime > values[prev2] * 1.1))
+				if ((protekloVreme < vrednosti[prethodni1] * 0.9 || protekloVreme > vrednosti[prethodni1] * 1.1) 
+				&&  (protekloVreme < vrednosti[prethodni2] * 0.9 || protekloVreme > vrednosti[prethodni2] * 1.1))
 				{
-					numOfErrors++;
+					brGresaka++;
+
 					Serial.print("Greska broj: ");
-					Serial.println(numOfErrors);
+					Serial.println(brGresaka);
+
 					Serial.print("Procenat greske: ");
-					Serial.println(numOfErrors * 100 / numOfValues);
+					Serial.println(brGresaka * 100 / brVrednosti);
 				}
 			}
-			numOfValues++;
+			brVrednosti++;
         }
-        first = false;
+        prvi = false;
 	}
-	oldState = newState;
+	staroStanje = novoStanje;
 }
 
 void setup()
@@ -80,14 +80,14 @@ void setup()
 	Serial.begin(9600);
 
 	// pwm(pin, period, duzina, greska)
-	pwm(myPIN, 2000, 750, 0.2);
+	pwm(pin26, 2000, 750, 0.2);
 
-	oldState = digitalRead(myPIN);
-	startTime = millis();
-	elapsedTime = 0;
-	periodTime = 0;
-	numOfValues = 0;
-	numOfErrors = 0;
+	staroStanje = digitalRead(pin26);
+	pocetnoVreme = millis();
+	protekloVreme = 0;
+	vremePerioda = 0;
+	brVrednosti = 0;
+	brGresaka = 0;
 	
 	createTask(brojevi, 1, TASK_ENABLE, NULL);
 }
