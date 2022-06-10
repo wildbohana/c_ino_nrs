@@ -17,39 +17,38 @@ extern serial Serial;
 
 #define optimum 20
 
-#define numOfLastValues 10
-int numOfValues;
-int values[numOfLastValues];
+#define brPoslednjihVrednosti 10
+int brVrednosti;
+int vrednosti[brPoslednjihVrednosti];
 
 void klima(int id, void* tptr)
 {
     if (available())
     {
-        char *r = read();
+        char* r = read();
+		brVrednosti++;
+
         int t = atoi(r + 21);
 
         Serial.print("Temperatura: ");
         Serial.println(t);
 
-		values[numOfValues % numOfLastValues] = t;
+		vrednosti[brVrednosti % brPoslednjihVrednosti] = t;
 
-		if (numOfValues >= 3)
+		if (brVrednosti >= 3)
 		{
-			int prev1 = (numOfValues - 1) % numOfLastValues;
-			int prev2 = (numOfValues - 2) % numOfLastValues;
+			int prethodni1 = (brVrednosti - 1) % brPoslednjihVrednosti;
+			int prethodni2 = (brVrednosti - 2) % brPoslednjihVrednosti;
 
-			if (values[prev1] > optimum && values[prev2] > optimum && t > optimum)
+			if (vrednosti[prethodni1] > optimum && vrednosti[prethodni2] > optimum && t > optimum)
 			{
 				Serial.println("Postaje previse toplo. Ukljuci klimu.");
 			}
-			else if (values[prev1] < optimum && values[prev2] < optimum && t < optimum)
+			else if (vrednosti[prethodni1] < optimum && vrednosti[prethodni2] < optimum && t < optimum)
 			{
 				Serial.println("Postaje previse hladno. Iskljuci klimu.");
 			}
 		}
-
-		numOfValues++;
-
         delete[] r;
     }
 }
@@ -60,7 +59,7 @@ void setup()
 
     startStopDataGeneration(START_GENERATION, RANDOM, 15, 25, 0.1, 500);
 
-	numOfValues = 0;
+	brVrednosti = -1;
     createTask(klima, 50, TASK_ENABLE, NULL);
 }
 
