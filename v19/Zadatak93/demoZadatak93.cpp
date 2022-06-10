@@ -14,55 +14,55 @@ Period oscilovanja signala ispisati kao vreme proteklo izmedju dva maksimuma u s
 
 extern serial Serial;
 
-#define myPIN 26
-int oldState;
-int periodTime;
-int startTime;
-int elapsedTime;
+#define pin26 26
+int staroStanje;
+int vremePerioda;
+int pocetnoVreme;
+int protekloVreme;
 
 #define maksimum 2000
 
 void brojevi(int id, void* tptr)
 {
-    static int first = true;
+    static int prvi = true;
 
-	static bool dostignut_maksimum = false;
-	static int period_begin = 0;
+	static bool dostignutMaksimum = false;
+	static int pocetakPerioda = 0;
 
-    int newState = digitalRead(myPIN);
+    int novoStanje = digitalRead(pin26);
 
-	if (oldState == 1 && newState == 0) 
+	if (staroStanje == 1 && novoStanje == 0) 
 	{
-        elapsedTime = millis() - startTime;
+        protekloVreme = millis() - pocetnoVreme;
 
-		if (elapsedTime >= maksimum)
-			dostignut_maksimum = true;
+		if (protekloVreme >= maksimum)
+			dostignutMaksimum = true;
 	} 
-	else if (oldState == 0 && newState == 1) 
+	else if (staroStanje == 0 && novoStanje == 1) 
 	{
-        int time = millis();
-        periodTime = time - startTime;
-        startTime = time;
+        int vreme = millis();
+        vremePerioda = vreme - pocetnoVreme;
+        pocetnoVreme = vreme;
 
-        if (!first) 
+        if (!prvi) 
 		{
-			Serial.print(elapsedTime);
+			Serial.print(protekloVreme);
 			Serial.print(' ');
-			Serial.println(periodTime);
+			Serial.println(vremePerioda);
 
-			if (dostignut_maksimum)
+			if (dostignutMaksimum)
 			{
-			    int razlika = millis() - period_begin;
+			    int razlika = millis() - pocetakPerioda;
 				Serial.print("Vreme izmedju dva maksimuma: ");
 				Serial.println(razlika);
 
-				period_begin = millis();
-				dostignut_maksimum = false;
+				pocetakPerioda = millis();
+				dostignutMaksimum = false;
 			}
         }
-        first = false;
+        prvi = false;
 	}
-	oldState = newState;
+	staroStanje = novoStanje;
 }
 
 void setup()
@@ -72,10 +72,10 @@ void setup()
 	// pwmSin(pin, period, greska)
 	pwmSin(26, 2000, 0.0);
 
-	oldState = digitalRead(myPIN);
-	startTime = millis();
-	elapsedTime = 0;
-	periodTime = 0;
+	staroStanje = digitalRead(pin26);
+	pocetnoVreme = millis();
+	protekloVreme = 0;
+	vremePerioda = 0;
 
 	createTask(brojevi, 1, TASK_ENABLE, NULL);
 }
