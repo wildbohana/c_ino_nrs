@@ -14,39 +14,36 @@ do greske, prijaviti datum i vreme greske kao i procenat greske u ukupnom signal
 
 extern serial Serial;
 
-#define numOfLastValues 10
-
-int suma;
-int br = 0;
-int numOfValues;
-int values[numOfLastValues];
-int numOfErrors;
+#define brPoslednjihVrednosti 10
+int brVrednosti;
+int vrednosti[brPoslednjihVrednosti];
+int brGresaka;
 
 void broj(int id, void *tptr)
 {
     if (available())
     {
 		// dd.mm.yyyy. hh:mm:ss num
-        char *r = read();
-        numOfValues++;
+        char* r = read();
+        brVrednosti++;
 
         // broj pocinje od 21. karaktera
         int br = atoi(r + 21);
-
-        values[numOfValues%numOfLastValues] = br;
         Serial.println(br);
 
-        if (numOfValues >= 2) 
-		{
-            int prev1 = (numOfValues - 1) % numOfLastValues;
-            int prev2 = (numOfValues - 2) % numOfLastValues;
+        vrednosti[brVrednosti % brPoslednjihVrednosti] = br;
 
-            if ((br < values[prev1] * 0.9 || br > values[prev1] * 1.1) 
-			&&  (br < values[prev2] * 0.9 || br > values[prev2] * 1.1))
+        if (brVrednosti >= 2) 
+		{
+            int prethodni1 = (brVrednosti - 1) % brPoslednjihVrednosti;
+            int prethodni2 = (brVrednosti - 2) % brPoslednjihVrednosti;
+
+            if ((br < vrednosti[prethodni1] * 0.9 || br > vrednosti[prethodni1] * 1.1) 
+			&&  (br < vrednosti[prethodni2] * 0.9 || br > vrednosti[prethodni2] * 1.1))
 			{
-				numOfErrors++;
+				brGresaka++;
 				Serial.print("Greska broj: ");
-				Serial.println(numOfErrors);
+				Serial.println(brGresaka);
 
 				char datum[12];
 				strncpy(datum, r, 11);
@@ -56,12 +53,12 @@ void broj(int id, void *tptr)
 
 				char vreme[9];
 				vreme[8] = '\0';
-				strncpy(vreme, r+12, 8);
+				strncpy(vreme, r + 12, 8);
 				Serial.print("Vreme greske: ");
 				Serial.println(vreme);
 				
 				Serial.print("Procenat greske: ");
-				Serial.println(numOfErrors * 100 / numOfValues);
+				Serial.println(brGresaka * 100 / brVrednosti);
 			}
         }
         delete[] r;
@@ -74,8 +71,8 @@ void setup()
 
     startStopDataGeneration(START_GENERATION, SAME, 0, 10, 0.1, 500);
 
-    numOfValues = -1;
-    numOfErrors = 0;
+    brVrednosti = -1;
+    brGresaka = 0;
 
     createTask(broj, 50, TASK_ENABLE, NULL);
 }
