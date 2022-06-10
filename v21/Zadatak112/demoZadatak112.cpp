@@ -8,21 +8,21 @@ kolika je bila prosecna temperatura, prosecan vazdusni pritisak i najveca vredno
 Napomena: neophodno je dopuniti tip podataka Slog novim podacima kao i generisati nove podatke.
 */
 
-#include<arduinoPlatform.h>
-#include<tasks.h>
-#include<interrupts.h>
-#include<stdio.h>
-#include<serial.h>
+#include <arduinoPlatform.h>
+#include <tasks.h>
+#include <interrupts.h>
+#include <stdio.h>
+#include <serial.h>
 #include <pwm.h>
-#include<data.h>
+#include <data.h>
 
 extern serial Serial;
 
-#define maxBrVrednosti 30
-int brojVrednosti = 0;
-int temperatura[maxBrVrednosti];
-short UV[maxBrVrednosti];
-short pritisak[maxBrVrednosti];
+#define brPoslednjihVrednosti 30
+int brVrednosti;
+int temperatura[brPoslednjihVrednosti];
+short UV[brPoslednjihVrednosti];
+short pritisak[brPoslednjihVrednosti];
 
 void brojevi(int id, void* tptr)
 {
@@ -31,23 +31,23 @@ void brojevi(int id, void* tptr)
         char *buffer = readAll();
         int velicina = *((int*) buffer);
 
+        brVrednosti++;
+
         for (int i = 0; i < velicina; i++)
         {
-            temperatura[brojVrednosti] = *(int*)(buffer + sizeof(int) + i * slogSize() + 32);
-            UV[brojVrednosti]= *(short*)(buffer + sizeof(int) + i * slogSize() + 36);
-            pritisak[brojVrednosti] = *(short*)(buffer + sizeof(int) + i * slogSize() + 38);
-
-            brojVrednosti++;
+            temperatura[brVrednosti] = *(int*)(buffer + sizeof(int) + i * slogSize() + 32);
+            UV[brVrednosti] = *(short*)(buffer + sizeof(int) + i * slogSize() + 36);
+            pritisak[brVrednosti] = *(short*)(buffer + sizeof(int) + i * slogSize() + 38);
 
 			// na svakih 30 vrednosti, ispisujemo prosek
-            if (brojVrednosti == maxBrVrednosti) 
+            if (brVrednosti == brPoslednjihVrednosti) 
 			{
-                brojVrednosti = 0;
+                brVrednosti = 0;
                 int maxUV = UV[0];
                 int sumaTemp = 0;
                 int sumaPrit = 0;
 
-                for (int j = 0; j < maxBrVrednosti; j++) 
+                for (int j = 0; j < brPoslednjihVrednosti; j++) 
 				{
                     sumaTemp += temperatura[j];
                     sumaPrit += pritisak[j];
@@ -56,9 +56,9 @@ void brojevi(int id, void* tptr)
                 }
 				
                 Serial.print("Prosecna temperatura je: ");
-                Serial.println(sumaTemp / maxBrVrednosti);
+                Serial.println(sumaTemp / brPoslednjihVrednosti);
                 Serial.print("Prosecan pritisak je: ");
-                Serial.println(sumaPrit / maxBrVrednosti);
+                Serial.println(sumaPrit / brPoslednjihVrednosti);
                 Serial.print("Najveci koeficijent UV zracenja je: ");
                 Serial.println(maxUV);
             }
@@ -73,6 +73,7 @@ void setup()
 
     startStopDataGeneration(START_GENERATION, SIN, 15, 40, 0.0, 200);
 
+	brVrednosti = -1;
     createTask(brojevi, 1000, TASK_ENABLE,  NULL);
 }
 
