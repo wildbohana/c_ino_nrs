@@ -1,9 +1,9 @@
 /*
-Napisati program koji kontiunuirano prati stanje na senzorima, obradjuje prikupljene podatke 
-i ispisuje na serijski monitor. Od senzora se prikupljaju podaci o rednom broju elektronskog 
-uređaja na kojem se vrsi merenje, kao i naponu i jacini struje na uredjaju. Redni broj 
-uredjaja je broj iz intervala od 0 do 20, jacina struje izrazava se u miliamperima i krece 
-se u intervalu od 0 do 3000, a napon u voltima u intervalu od 180 do 260.
+Napisati program koji kontiunuirano prati stanje na senzorima, obradjuje prikupljene podatke i ispisuje na serijski monitor. Od senzora se prikupljaju podaci o rednom 
+broju elektronskog uređaja na kojem se vrsi merenje, kao i naponu i jacini struje na 
+uredjaju. Redni broj uredjaja je broj iz intervala od 0 do 20, jacina struje izrazava 
+se u miliamperima i krece se u intervalu od 0 do 3000, a napon u voltima u intervalu 
+od 180 do 260.
 Ukoliko neki uredjaj primi napon koji se za više od 30 volti razlikuje od 
 prethodnog napona za taj uredjaj, prijaviti upozorenje na serijski monitor.
 Nakon svakih 30 ucitanih podataka, ispisati koji uredjaj ima najvise prijavljenih 
@@ -25,11 +25,11 @@ Napomena 2: fajl data.cpp za ovaj zadatak nalazi se na sajtu predmeta.
 
 extern serial Serial;
 
-#define maxBrVrednosti 30
-#define maxBrUredjaja 21
-int brojVrednosti = 0;
-short napon[maxBrUredjaja];
-short brUpozorenja[maxBrUredjaja];
+#define brPoslednjihVrednosti 30
+#define brPoslednjihUredjaja 21
+int brVrednosti;
+short napon[brPoslednjihUredjaja] = {0};
+short brUpozorenja[brPoslednjihUredjaja] = {0};
 
 void brojevi(int id, void* tptr)
 {
@@ -37,6 +37,8 @@ void brojevi(int id, void* tptr)
     {
         char* buffer = readAll();
         int velicina = *((int*) buffer);
+
+        brVrednosti++;
 
         for (int i = 0; i < velicina; i++)
         {
@@ -49,8 +51,6 @@ void brojevi(int id, void* tptr)
             Serial.print(izmereniNapon);
             Serial.print(" ");
             Serial.println(izmerenaJacina);
-
-            brojVrednosti++;
 
 			// ukoliko neki uredjaj primi napon koji se za više od 30 volti razlikuje od 
 			// prethodnog napona za taj uredjaj, prijaviti upozorenje na serijski monitor
@@ -65,7 +65,7 @@ void brojevi(int id, void* tptr)
 
 			// nakon svakih 30 ucitanih podataka, ispisati koji
 			// uredjaj ima najvise prijavljenih upozorenja
-            if (brojVrednosti % maxBrVrednosti == 0) 
+            if (brVrednosti % brPoslednjihVrednosti == 0) 
 			{
                 int maxJ = 0;
 
@@ -77,7 +77,6 @@ void brojevi(int id, void* tptr)
                 Serial.println(maxJ);
             }
         }
-
         delete[] buffer;
     }
 }
@@ -86,15 +85,9 @@ void setup()
 {
     Serial.begin(9600);
 
-    brojVrednosti = 0;
-    for (int i = 0; i < maxBrUredjaja; i++) 
-	{
-        napon[i] = 0;
-        brUpozorenja[i] = 0;
-    }
+	startStopDataGeneration(START_GENERATION, RANDOM, 0, 20, 0.0, 1000);
 
-    startStopDataGeneration(START_GENERATION, RANDOM, 0, 20, 0.0, 1000);
-
+    brVrednosti = -1;
     createTask(brojevi, 1000, TASK_ENABLE,  NULL);
 }
 
